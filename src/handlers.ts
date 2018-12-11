@@ -6,8 +6,9 @@
 
 import { Handler, NextFunction, Request, Response } from "express";
 import { SudooExpressApplication } from "./application";
+import { SudooExpressHandlerCreator } from "./route";
 
-export const createHeaderHandler = (app: SudooExpressApplication): Handler =>
+export const createHeaderHandler: SudooExpressHandlerCreator = (app: SudooExpressApplication): Handler =>
     (req: Request, res: Response, next: NextFunction) => {
 
         if (app.crossOrigin) {
