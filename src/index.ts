@@ -80,19 +80,19 @@ export class SudooExpress {
         switch (route.mode) {
 
             case ROUTE_MODE.ALL:
-                this._express.all(route.path, ...handlers);
+                this._express.all(route.path, ...handlers as any as Express.Handler[]);
                 break;
             case ROUTE_MODE.DELETE:
-                this._express.delete(route.path, ...handlers);
+                this._express.delete(route.path, ...handlers as any as Express.Handler[]);
                 break;
             case ROUTE_MODE.GET:
-                this._express.get(route.path, ...handlers);
+                this._express.get(route.path, ...handlers as any as Express.Handler[]);
                 break;
             case ROUTE_MODE.POST:
-                this._express.post(route.path, ...handlers);
+                this._express.post(route.path, ...handlers as any as Express.Handler[]);
                 break;
             case ROUTE_MODE.PUT:
-                this._express.put(route.path, ...handlers);
+                this._express.put(route.path, ...handlers as any as Express.Handler[]);
                 break;
             default:
                 throw this._errorCreator(SUDOO_EXPRESS_ERROR_CODE.ROUTE_MODE_NOT_EXIST, route.mode);
