@@ -112,6 +112,6 @@ export class SudooExpress {
     }
 }
 
-export { SudooExpressHandler, SudooExpressRequest, SudooExpressResponse, SUDOO_EXPRESS_GROUP } from './declare';
+export { SudooExpressHandler, SudooExpressNextFunction, SudooExpressRequest, SudooExpressResponse, SUDOO_EXPRESS_GROUP } from './declare';
 export { SudooExpressApplication, ISudooExpressRoute, ROUTE_MODE, SudooExpressHandlerGroup };
 
