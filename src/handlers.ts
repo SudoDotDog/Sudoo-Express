@@ -4,13 +4,12 @@
  * @description Handlers
  */
 
-import { NextFunction } from "express";
 import { SudooExpressResponseAgent } from "./agent";
 import { SudooExpressApplication } from "./application";
-import { SudooExpressErrorHandler, SudooExpressHandler, SudooExpressRequest, SudooExpressResponse } from "./declare";
+import { SudooExpressErrorHandler, SudooExpressHandler, SudooExpressNextFunction, SudooExpressRequest, SudooExpressResponse } from "./declare";
 
 export const createHeaderHandler = (app: SudooExpressApplication): SudooExpressHandler =>
-    (req: SudooExpressRequest, res: SudooExpressResponse, next: NextFunction) => {
+    (req: SudooExpressRequest, res: SudooExpressResponse, next: SudooExpressNextFunction) => {
 
         if (app.crossOrigin) {
             res.header("Access-Control-Allow-Origin", app.crossOrigin);
@@ -23,7 +22,7 @@ export const createHeaderHandler = (app: SudooExpressApplication): SudooExpressH
     };
 
 export const createResponseAgentHandler = (): SudooExpressHandler =>
-    (req: SudooExpressRequest, res: SudooExpressResponse, next: NextFunction) => {
+    (req: SudooExpressRequest, res: SudooExpressResponse, next: SudooExpressNextFunction) => {
 
         res.agent = SudooExpressResponseAgent.create(res);
 
@@ -31,7 +30,7 @@ export const createResponseAgentHandler = (): SudooExpressHandler =>
     };
 
 export const createResponseSendHandler = (errorHandleFunction: SudooExpressErrorHandler): SudooExpressHandler =>
-    (req: SudooExpressRequest, res: SudooExpressResponse, next: NextFunction) => {
+    (req: SudooExpressRequest, res: SudooExpressResponse, next: SudooExpressNextFunction) => {
 
         res.agent = SudooExpressResponseAgent.create(res);
 

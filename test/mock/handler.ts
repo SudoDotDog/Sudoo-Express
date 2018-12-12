@@ -5,7 +5,7 @@
  * @package Unit Test
  */
 
-import { NextFunction, Request, Response } from "express";
+import { SudooExpressNextFunction, SudooExpressRequest, SudooExpressResponse } from "../../src/declare";
 
 export class MockHandler {
 
@@ -14,46 +14,46 @@ export class MockHandler {
         return new MockHandler();
     }
 
-    private _req: Request;
-    private _res: Response;
-    private _next: NextFunction;
+    private _req: SudooExpressRequest;
+    private _res: SudooExpressResponse;
+    private _next: SudooExpressNextFunction;
 
     private readonly _called: string[];
 
     private constructor() {
 
-        this._req = {} as Request;
-        this._res = {} as Response;
+        this._req = {} as SudooExpressRequest;
+        this._res = {} as SudooExpressResponse;
         this._next = () => this._called.push('NEXT');
     }
 
-    public get req(): Request {
+    public get req(): SudooExpressRequest {
         return this._req;
     }
 
-    public get res(): Response {
+    public get res(): SudooExpressResponse {
         return this._res;
     }
 
-    public get next(): NextFunction {
+    public get next(): SudooExpressNextFunction {
         return this._next;
     }
 
-    public request(partial: Partial<Request>): MockHandler {
+    public request(partial: Partial<SudooExpressRequest>): MockHandler {
 
         this._req = {
             ...this._req,
             ...partial,
-        } as Request;
+        } as SudooExpressRequest;
         return this;
     }
 
-    public response(partial: Partial<Response>): MockHandler {
+    public response(partial: Partial<SudooExpressResponse>): MockHandler {
 
         this._res = {
             ...this._res,
             ...partial,
-        } as Response;
+        } as SudooExpressResponse;
         return this;
     }
 }
