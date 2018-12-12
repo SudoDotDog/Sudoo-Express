@@ -59,6 +59,13 @@ export class SudooExpress {
         return this;
     }
 
+    public use(handler: Express.Handler): SudooExpress {
+
+        this._express.use(handler);
+
+        return this;
+    }
+
     public route(route: ISudooExpressRoute): SudooExpress {
 
         const handlers: SudooExpressHandler[] = [
