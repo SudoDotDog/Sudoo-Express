@@ -105,7 +105,7 @@ export class SudooExpress {
 
         if (this._groups.has(groupName)) {
 
-            return this._groups.get(groupName);
+            return this._groups.get(groupName) as any as SudooExpressHandler[];
         }
 
         throw this._errorCreator(SUDOO_EXPRESS_ERROR_CODE.GROUP_NOT_EXIST, groupName);
