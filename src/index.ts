@@ -9,6 +9,7 @@ import * as Express from "express";
 import * as Http from 'http';
 import { isString } from "util";
 import { SudooExpressApplication } from "./application";
+import { SudooExpressHandler } from "./declare";
 import { registerError, SUDOO_EXPRESS_ERROR_CODE } from "./error";
 import { createHeaderHandler, createResponseAgentHandler, createResponseSendHandler } from "./handlers";
 import { ISudooExpressRoute, ROUTE_MODE, SudooExpressHandlerGroup } from "./route";
@@ -26,7 +27,7 @@ export class SudooExpress {
 
     private readonly _errorCreator: ErrorCreationFunction;
 
-    private readonly _groups: Map<string, Express.Handler[]>;
+    private readonly _groups: Map<string, SudooExpressHandler[]>;
 
     private constructor(app: SudooExpressApplication, error: ErrorCreationFunction) {
 
@@ -35,10 +36,10 @@ export class SudooExpress {
 
         this._errorCreator = error;
 
-        this._groups = new Map<string, Express.Handler[]>();
+        this._groups = new Map<string, SudooExpressHandler[]>();
     }
 
-    public group(groupName: string, handlers: Express.Handler[]): SudooExpress {
+    public group(groupName: string, handlers: SudooExpressHandler[]): SudooExpress {
 
         if (this._groups.has(groupName)) {
 
@@ -60,18 +61,18 @@ export class SudooExpress {
 
     public route(route: ISudooExpressRoute): SudooExpress {
 
-        const handlers: Express.Handler[] = [
+        const handlers: SudooExpressHandler[] = [
 
             createHeaderHandler(this._application),
             createResponseAgentHandler(),
-        ].concat(route.groups.reduce((previous: Express.Handler[], group: SudooExpressHandlerGroup) => {
+        ].concat(route.groups.reduce((previous: SudooExpressHandler[], group: SudooExpressHandlerGroup) => {
 
             if (isString(group)) {
 
                 return previous.concat(...this._assertGroup(group));
             }
             return previous.concat(group);
-        }, [] as Express.Handler[])).concat([
+        }, [] as SudooExpressHandler[])).concat([
 
             createResponseSendHandler(route.errorHandler),
         ]);
@@ -100,7 +101,7 @@ export class SudooExpress {
         return this;
     }
 
-    private _assertGroup(groupName: string): Express.Handler[] {
+    private _assertGroup(groupName: string): SudooExpressHandler[] {
 
         if (this._groups.has(groupName)) {
 
@@ -111,6 +112,6 @@ export class SudooExpress {
     }
 }
 
-export { SudooExpressRequest, SudooExpressResponse, SUDOO_EXPRESS_GROUP } from './declare';
+export { SudooExpressHandler, SudooExpressRequest, SudooExpressResponse, SUDOO_EXPRESS_GROUP } from './declare';
 export { SudooExpressApplication, ISudooExpressRoute, ROUTE_MODE, SudooExpressHandlerGroup };
 

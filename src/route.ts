@@ -4,8 +4,7 @@
  * @description Route
  */
 
-import { Handler } from "express";
-import { SudooExpressErrorHandler } from "./declare";
+import { SudooExpressErrorHandler, SudooExpressHandler } from "./declare";
 
 export enum ROUTE_MODE {
     POST = 'POST',
@@ -15,9 +14,9 @@ export enum ROUTE_MODE {
     ALL = 'ALL',
 }
 
-export type SudooExpressHandlerCreator = (...args: any[]) => Handler;
+export type SudooExpressHandlerCreator = (...args: any[]) => SudooExpressHandler;
 
-export type SudooExpressHandlerGroup = string | Handler;
+export type SudooExpressHandlerGroup = string | SudooExpressHandler;
 
 export interface ISudooExpressRoute {
 

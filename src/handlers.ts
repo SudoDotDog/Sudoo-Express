@@ -4,12 +4,12 @@
  * @description Handlers
  */
 
-import { Handler, NextFunction } from "express";
+import { NextFunction } from "express";
 import { SudooExpressResponseAgent } from "./agent";
 import { SudooExpressApplication } from "./application";
-import { SudooExpressErrorHandler, SudooExpressRequest, SudooExpressResponse } from "./declare";
+import { SudooExpressErrorHandler, SudooExpressHandler, SudooExpressRequest, SudooExpressResponse } from "./declare";
 
-export const createHeaderHandler = (app: SudooExpressApplication): Handler =>
+export const createHeaderHandler = (app: SudooExpressApplication): SudooExpressHandler =>
     (req: SudooExpressRequest, res: SudooExpressResponse, next: NextFunction) => {
 
         if (app.crossOrigin) {
@@ -22,7 +22,7 @@ export const createHeaderHandler = (app: SudooExpressApplication): Handler =>
         next();
     };
 
-export const createResponseAgentHandler = (): Handler =>
+export const createResponseAgentHandler = (): SudooExpressHandler =>
     (req: SudooExpressRequest, res: SudooExpressResponse, next: NextFunction) => {
 
         res.agent = SudooExpressResponseAgent.create(res);
@@ -30,7 +30,7 @@ export const createResponseAgentHandler = (): Handler =>
         next();
     };
 
-export const createResponseSendHandler = (errorHandleFunction: SudooExpressErrorHandler) =>
+export const createResponseSendHandler = (errorHandleFunction: SudooExpressErrorHandler): SudooExpressHandler =>
     (req: SudooExpressRequest, res: SudooExpressResponse, next: NextFunction) => {
 
         res.agent = SudooExpressResponseAgent.create(res);
