@@ -6,6 +6,7 @@
 
 import Connor, { ConnorError, ErrorCreationFunction } from 'connor';
 import { Response } from "express";
+import { SudooExpressErrorHandler } from './declare';
 import { registerError, SUDOO_EXPRESS_ERROR_CODE } from './error';
 
 export class SudooExpressResponseAgent {
@@ -84,11 +85,12 @@ export class SudooExpressResponseAgent {
         return this;
     }
 
-    public send(): SudooExpressResponseAgent {
+    public send(errorHandler: SudooExpressErrorHandler): SudooExpressResponseAgent {
 
         if (this._failInfo) {
 
-            this._res.status(this._failInfo.code).send(this._failInfo.error);
+            const { code, message } = errorHandler(this._failInfo.code, this._failInfo.error);
+            this._res.status(code).send(message);
         } else if (this._file) {
 
             this._res.status(200).sendFile(this._file);

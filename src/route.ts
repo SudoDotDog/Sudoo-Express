@@ -4,8 +4,8 @@
  * @description Route
  */
 
-import { ConnorError } from "connor";
 import { Handler } from "express";
+import { SudooExpressErrorHandler } from "./declare";
 
 export enum ROUTE_MODE {
     POST = 'POST',
@@ -17,14 +17,13 @@ export enum ROUTE_MODE {
 
 export type SudooExpressHandlerCreator = (...args: any[]) => Handler;
 
-export type SudooExpressHandlerGroup = string | SudooExpressHandlerCreator;
+export type SudooExpressHandlerGroup = string | Handler;
 
 export interface ISudooExpressRoute {
 
-    readonly name: string;
     readonly path: string;
     readonly mode: ROUTE_MODE;
 
     readonly groups: SudooExpressHandlerGroup[];
-    readonly errorHandler: (error: ConnorError) => Error;
+    readonly errorHandler: SudooExpressErrorHandler;
 }
