@@ -32,7 +32,6 @@ export const createResponseAgentHandler = (): SudooExpressHandler =>
 export const createResponseSendHandler = (errorHandleFunction: SudooExpressErrorHandler): SudooExpressHandler =>
     (req: SudooExpressRequest, res: SudooExpressResponse, next: SudooExpressNextFunction) => {
 
-        res.agent = SudooExpressResponseAgent.create(res);
-
+        res.agent.send(errorHandleFunction);
         next();
     };
