@@ -27,6 +27,7 @@
     "express": "^4.16.4"
   },
   "devDependencies": {
+    "@sudoo/tslint-config": "^1.0.0",
     "@types/chai": "^4.1.7",
     "@types/chance": "^1.0.1",
     "@types/express": "^4.16.0",
