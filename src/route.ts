@@ -24,5 +24,5 @@ export interface ISudooExpressRoute {
     readonly mode: ROUTE_MODE;
 
     readonly groups: SudooExpressHandlerGroup[];
-    readonly errorHandler: SudooExpressErrorHandler;
+    readonly onError: SudooExpressErrorHandler;
 }

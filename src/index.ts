@@ -81,7 +81,7 @@ export class SudooExpress {
             return previous.concat(group);
         }, [] as SudooExpressHandler[])).concat([
 
-            createResponseSendHandler(route.errorHandler),
+            createResponseSendHandler(route.onError),
         ]);
 
         switch (route.mode) {
