@@ -21,10 +21,10 @@ export const createHeaderHandler = (app: SudooExpressApplication): SudooExpressH
         next();
     };
 
-export const createResponseAgentHandler = (): SudooExpressHandler =>
+export const createResponseAgentHandler = (errorHandleFunction: SudooExpressErrorHandler): SudooExpressHandler =>
     (req: SudooExpressRequest, res: SudooExpressResponse, next: SudooExpressNextFunction) => {
 
-        res.agent = SudooExpressResponseAgent.create(res);
+        res.agent = SudooExpressResponseAgent.create(res, errorHandleFunction);
 
         next();
     };
