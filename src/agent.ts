@@ -6,7 +6,7 @@
 
 import Connor, { ConnorError, ErrorCreationFunction } from 'connor';
 import { Response } from "express";
-import { SudooExpressErrorHandler } from './declare';
+import { SudooExpressErrorHandler, SudooExpressNextFunction } from './declare';
 import { registerError, SUDOO_EXPRESS_ERROR_CODE } from './error';
 
 export class SudooExpressResponseAgent {
@@ -120,6 +120,15 @@ export class SudooExpressResponseAgent {
             return true;
         }
         return false;
+    }
+
+    public catchAndWrap(next: SudooExpressNextFunction): SudooExpressNextFunction {
+
+        if (this.isFailed()) {
+            return () => void 0;
+        }
+
+        return next;
     }
 
     private _expectClean(...conditions: any[]): void {

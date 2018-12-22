@@ -14,6 +14,10 @@ export enum SUDOO_EXPRESS_GROUP {
 
 export type SudooExpressRequest = {
     authenticate: any | null;
+    valid: boolean;
+    info: {
+        [key: string]: any;
+    };
 } & Request;
 export type SudooExpressResponse = {
     agent: SudooExpressResponseAgent;
