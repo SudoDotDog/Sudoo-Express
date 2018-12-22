@@ -12,7 +12,9 @@ export enum SUDOO_EXPRESS_GROUP {
     HEADER = 'HEADER',
 }
 
-export type SudooExpressRequest = Request;
+export type SudooExpressRequest = {
+    authenticate: any | null;
+} & Request;
 export type SudooExpressResponse = {
     agent: SudooExpressResponseAgent;
 } & Response;

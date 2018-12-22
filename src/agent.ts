@@ -115,13 +115,20 @@ export class SudooExpressResponseAgent {
         return this;
     }
 
-    private _expectClean(...conditions: any[]) {
+    public isFailed(): boolean {
+        if (this._failInfo) {
+            return true;
+        }
+        return false;
+    }
+
+    private _expectClean(...conditions: any[]): void {
         if (conditions.some(Boolean)) {
             throw this._errorCreator(SUDOO_EXPRESS_ERROR_CODE.RESPONSE_NOT_CLEAN);
         }
     }
 
-    private _checkFailed() {
+    private _checkFailed(): void {
         if (this._failInfo) {
             throw this._errorCreator(SUDOO_EXPRESS_ERROR_CODE.RESPONSE_ALREADY_FAILED, this._failInfo.toString());
         }
