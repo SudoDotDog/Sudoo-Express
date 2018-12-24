@@ -71,7 +71,7 @@ export class SudooExpress {
         const handlers: SudooExpressHandler[] = [
 
             createHeaderHandler(this._application),
-            createResponseAgentHandler(route.onError),
+            createResponseAgentHandler(route),
         ].concat(route.groups.reduce((previous: SudooExpressHandler[], group: SudooExpressHandlerGroup) => {
 
             if (isString(group)) {
@@ -81,7 +81,7 @@ export class SudooExpress {
             return previous.concat(group);
         }, [] as SudooExpressHandler[])).concat([
 
-            createResponseSendHandler(route.onError),
+            createResponseSendHandler(),
         ]);
 
         switch (route.mode) {

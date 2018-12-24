@@ -7,6 +7,7 @@
 import { SudooExpressResponseAgent } from "./agent";
 import { SudooExpressApplication } from "./application";
 import { SudooExpressErrorHandler, SudooExpressHandler, SudooExpressNextFunction, SudooExpressRequest, SudooExpressResponse } from "./declare";
+import { ISudooExpressRoute } from "./route";
 
 export const createHeaderHandler = (app: SudooExpressApplication): SudooExpressHandler =>
     (req: SudooExpressRequest, res: SudooExpressResponse, next: SudooExpressNextFunction) => {
@@ -21,21 +22,21 @@ export const createHeaderHandler = (app: SudooExpressApplication): SudooExpressH
         next();
     };
 
-export const createResponseAgentHandler = (errorHandleFunction: SudooExpressErrorHandler): SudooExpressHandler =>
+export const createResponseAgentHandler = (route: ISudooExpressRoute): SudooExpressHandler =>
     (req: SudooExpressRequest, res: SudooExpressResponse, next: SudooExpressNextFunction) => {
 
         req.authenticate = null;
         req.valid = false;
         (req as any).info = {};
 
-        (res as any).agent = SudooExpressResponseAgent.create(res, errorHandleFunction);
+        (res as any).agent = SudooExpressResponseAgent.create(res, route);
 
         next();
     };
 
-export const createResponseSendHandler = (errorHandleFunction: SudooExpressErrorHandler): SudooExpressHandler =>
+export const createResponseSendHandler = (): SudooExpressHandler =>
     (req: SudooExpressRequest, res: SudooExpressResponse, next: SudooExpressNextFunction) => {
 
-        res.agent.send(errorHandleFunction);
+        res.agent.send();
         next();
     };

@@ -8,18 +8,20 @@ import Connor, { ConnorError, ErrorCreationFunction } from 'connor';
 import { Response } from "express";
 import { SudooExpressErrorHandler, SudooExpressNextFunction } from './declare';
 import { registerError, SUDOO_EXPRESS_ERROR_CODE } from './error';
+import { ISudooExpressRoute } from './route';
 
 export class SudooExpressResponseAgent {
 
-    public static create(res: Response, errorHandler: SudooExpressErrorHandler): SudooExpressResponseAgent {
+    public static create(res: Response, route: ISudooExpressRoute): SudooExpressResponseAgent {
 
         const error: Connor = registerError();
-        return new SudooExpressResponseAgent(res, errorHandler, error.getErrorCreator());
+        return new SudooExpressResponseAgent(res, route, error.getErrorCreator());
     }
 
     private readonly _res: Response;
+    private readonly _route: ISudooExpressRoute;
+
     private readonly _errorCreator: ErrorCreationFunction;
-    private readonly _errorHandler: SudooExpressErrorHandler;
 
     private _file: string | null;
     private _redirect: string | null;
@@ -30,11 +32,12 @@ export class SudooExpressResponseAgent {
     } | null;
     private _successInfo: Map<string, any>;
 
-    private constructor(res: Response, errorHandler: SudooExpressErrorHandler, errorCreator: ErrorCreationFunction) {
+    private constructor(res: Response, route: ISudooExpressRoute, errorCreator: ErrorCreationFunction) {
 
         this._res = res;
+        this._route = route;
+
         this._errorCreator = errorCreator;
-        this._errorHandler = errorHandler;
 
         this._file = null;
         this._redirect = null;
@@ -87,9 +90,11 @@ export class SudooExpressResponseAgent {
         return this;
     }
 
-    public send(errorHandler: SudooExpressErrorHandler): SudooExpressResponseAgent {
+    public send(): SudooExpressResponseAgent {
 
         if (this._failInfo) {
+
+            const errorHandler: SudooExpressErrorHandler = this._route.onError.bind(this._route);
 
             const { code, message } = errorHandler(this._failInfo.code, this._failInfo.error);
             this._res.status(code).send(message);
@@ -130,7 +135,7 @@ export class SudooExpressResponseAgent {
 
         if (this.isFailed()) {
 
-            this.send(this._errorHandler);
+            this.send();
             return () => void 0;
         }
 
