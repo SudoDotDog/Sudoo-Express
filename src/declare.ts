@@ -15,12 +15,12 @@ export enum SUDOO_EXPRESS_GROUP {
 export type SudooExpressRequest = {
     authenticate: any | null;
     valid: boolean;
-    info: {
+    readonly info: {
         [key: string]: any;
     };
 } & Request;
 export type SudooExpressResponse = {
-    agent: SudooExpressResponseAgent;
+    readonly agent: SudooExpressResponseAgent;
 } & Response;
 export type SudooExpressNextFunction = () => void;
 export type SudooExpressHandler = (req: SudooExpressRequest, res: SudooExpressResponse, next: SudooExpressNextFunction) => void;
