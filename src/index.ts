@@ -120,5 +120,6 @@ export class SudooExpress {
 }
 
 export { SudooExpressHandler, SudooExpressNextFunction, SudooExpressRequest, SudooExpressResponse, SUDOO_EXPRESS_GROUP } from './declare';
+export { SudooExpressHook } from './hook';
 export { SudooExpressApplication, ISudooExpressRoute, ROUTE_MODE, SudooExpressHandlerGroup };
 
