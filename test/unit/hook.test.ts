@@ -113,7 +113,7 @@ describe('Given {SudooExpressHook} class', (): void => {
         const hook: SudooExpressHook<[string]> =
             SudooExpressHook.create<[string]>()
                 .before((a: string) => (result.push(a), true))
-                .after(async (a: string) => (result.push(a), undefined));
+                .after(async (a: string) => (await setTimeout(() => result.push(a), 13), undefined));
 
         const mock: MockHandler = MockHandler.create();
         const handler: SudooExpressHandler = hook.wrap(createMockHandler(() => result.push('NEXT')), expectValue);
@@ -123,11 +123,15 @@ describe('Given {SudooExpressHook} class', (): void => {
         expect(result).to.be.deep.equal([
             expectValue,
             'NEXT',
-            expectValue,
         ]);
         expect(mock.called).to.be.deep.equal([]);
 
-        await new Promise((resolve) => setTimeout(resolve, 100));
+        await new Promise((resolve) => setTimeout(resolve, 26));
+        expect(result).to.be.deep.equal([
+            expectValue,
+            'NEXT',
+            expectValue,
+        ]);
         expect(mock.called).to.be.deep.equal(['NEXT']);
     });
 
