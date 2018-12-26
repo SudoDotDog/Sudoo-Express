@@ -49,7 +49,7 @@ describe('Given {SudooExpressHook} class', (): void => {
 
         const hook: SudooExpressHook<[string]> =
             SudooExpressHook.create<[string]>()
-                .before((a: string) => (result.push(a), true));
+                .before((req, res, a: string) => (result.push(a), true));
 
         const mock: MockHandler = MockHandler.create();
         const handler: SudooExpressHandler = hook.wrap(createMockHandler(() => result.push('NEXT')), expectValue);
@@ -63,6 +63,34 @@ describe('Given {SudooExpressHook} class', (): void => {
         expect(mock.called).to.be.deep.equal(['NEXT']);
     });
 
+    it('should be able to get express information', async (): Promise<void> => {
+
+        const result: string[] = [];
+        const expectValue: string = chance.string();
+        const mock: MockHandler = MockHandler.create().request({
+            info: {
+                a: expectValue,
+            },
+        }).response({
+            agent: expectValue as any,
+        });
+
+        const hook: SudooExpressHook<[string]> =
+            SudooExpressHook.create<[string]>()
+                .before((req, res, a: string) => (result.push(req.info.a, res.agent as any), true));
+
+        const handler: SudooExpressHandler = hook.wrap(createMockHandler(() => result.push('NEXT')), expectValue);
+
+        await handler(mock.req, mock.res, mock.next);
+
+        expect(result).to.be.deep.equal([
+            expectValue,
+            expectValue,
+            'NEXT',
+        ]);
+        expect(mock.called).to.be.deep.equal(['NEXT']);
+    });
+
     it('should be able to stop process if before is assigned', async (): Promise<void> => {
 
         const result: string[] = [];
@@ -70,7 +98,7 @@ describe('Given {SudooExpressHook} class', (): void => {
 
         const hook: SudooExpressHook<[string]> =
             SudooExpressHook.create<[string]>()
-                .before((a: string) => (result.push(a), false));
+                .before((req, res, a: string) => (result.push(a), false));
 
         const mock: MockHandler = MockHandler.create();
         const handler: SudooExpressHandler = hook.wrap(createMockHandler(() => result.push('NEXT')), expectValue);
@@ -90,8 +118,8 @@ describe('Given {SudooExpressHook} class', (): void => {
 
         const hook: SudooExpressHook<[string]> =
             SudooExpressHook.create<[string]>()
-                .before((a: string) => (result.push(a), true))
-                .after((a: string) => (result.push(a), undefined));
+                .before((req, res, a: string) => (result.push(a), true))
+                .after((req, res, a: string) => (result.push(a), undefined));
 
         const mock: MockHandler = MockHandler.create();
         const handler: SudooExpressHandler = hook.wrap(createMockHandler(() => result.push('NEXT')), expectValue);
@@ -113,8 +141,8 @@ describe('Given {SudooExpressHook} class', (): void => {
 
         const hook: SudooExpressHook<[string]> =
             SudooExpressHook.create<[string]>()
-                .before((a: string) => (result.push(a), true))
-                .after(async (a: string) => (await promiseSetTimeout(() => result.push(a), 13), undefined));
+                .before((req, res, a: string) => (result.push(a), true))
+                .after(async (req, res, a: string) => (await promiseSetTimeout(() => result.push(a), 13), undefined));
 
         const mock: MockHandler = MockHandler.create();
         const handler: SudooExpressHandler = hook.wrap(createMockHandler(() => result.push('NEXT')), expectValue);
@@ -143,7 +171,7 @@ describe('Given {SudooExpressHook} class', (): void => {
 
         const hook: SudooExpressHook<[string]> =
             SudooExpressHook.create<[string]>()
-                .after((a: string) => (result.push(a), undefined));
+                .after((req, res, a: string) => (result.push(a), undefined));
 
         const mock: MockHandler = MockHandler.create();
         const handler: SudooExpressHandler = hook.wrap(createMockHandler(() => result.push('NEXT')), expectValue);
@@ -164,8 +192,8 @@ describe('Given {SudooExpressHook} class', (): void => {
 
         const hook: SudooExpressHook<[string]> =
             SudooExpressHook.create<[string]>()
-                .before((a: string) => (result.push(a), false))
-                .after((a: string) => (result.push(a), undefined));
+                .before((req, res, a: string) => (result.push(a), false))
+                .after((req, res, a: string) => (result.push(a), undefined));
 
         const mock: MockHandler = MockHandler.create();
         const handler: SudooExpressHandler = hook.wrap(createMockHandler(() => result.push('NEXT')), expectValue);

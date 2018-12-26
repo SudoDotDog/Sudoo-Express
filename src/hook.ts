@@ -13,8 +13,8 @@ export class SudooExpressHook<T extends any[]> {
         return new SudooExpressHook<T>();
     }
 
-    private _beforeHook: null | ((...args: T) => (boolean | Promise<boolean>));
-    private _afterHook: null | ((...args: T) => (void | Promise<void>));
+    private _beforeHook: null | ((req: SudooExpressRequest, res: SudooExpressResponse, ...args: T) => (boolean | Promise<boolean>));
+    private _afterHook: null | ((req: SudooExpressRequest, res: SudooExpressResponse, ...args: T) => (void | Promise<void>));
 
     private constructor() {
 
@@ -22,13 +22,13 @@ export class SudooExpressHook<T extends any[]> {
         this._afterHook = null;
     }
 
-    public before(func: (...args: T) => (boolean | Promise<boolean>)): SudooExpressHook<T> {
+    public before(func: (req: SudooExpressRequest, res: SudooExpressResponse, ...args: T) => (boolean | Promise<boolean>)): SudooExpressHook<T> {
 
         this._beforeHook = func;
         return this;
     }
 
-    public after(func: (...args: T) => (void | Promise<void>)): SudooExpressHook<T> {
+    public after(func: (req: SudooExpressRequest, res: SudooExpressResponse, ...args: T) => (void | Promise<void>)): SudooExpressHook<T> {
 
         this._afterHook = func;
         return this;
@@ -42,8 +42,8 @@ export class SudooExpressHook<T extends any[]> {
 
             if (_this._beforeHook) {
 
-                const beforeHook = _this._beforeHook as (...args: T) => (boolean | Promise<boolean>);
-                const isBeforeSucceed: boolean = await beforeHook(...args);
+                const beforeHook = _this._beforeHook as (req: SudooExpressRequest, res: SudooExpressResponse, ...args: T) => (boolean | Promise<boolean>);
+                const isBeforeSucceed: boolean = await beforeHook(req, res, ...args);
 
                 if (!isBeforeSucceed) {
                     next();
@@ -53,10 +53,10 @@ export class SudooExpressHook<T extends any[]> {
 
             if (_this._afterHook) {
 
-                const afterHook = _this._afterHook as (...args: T) => (void | Promise<void>);
+                const afterHook = _this._afterHook as (req: SudooExpressRequest, res: SudooExpressResponse, ...args: T) => (void | Promise<void>);
 
                 const wrappedNext: () => ((void | Promise<void>)) = async () => {
-                    await afterHook(...args);
+                    await afterHook(req, res, ...args);
                     next();
                 };
                 handler(req, res, wrappedNext);
