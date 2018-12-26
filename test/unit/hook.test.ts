@@ -127,7 +127,7 @@ describe('Given {SudooExpressHook} class', (): void => {
         ]);
         expect(mock.called).to.be.deep.equal([]);
 
-        await new Promise((resolve) => setTimeout(resolve, 10));
+        await new Promise((resolve) => setTimeout(resolve, 100));
         expect(mock.called).to.be.deep.equal(['NEXT']);
     });
 
