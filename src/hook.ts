@@ -13,8 +13,8 @@ export class SudooExpressHook<T extends any[]> {
         return new SudooExpressHook<T>();
     }
 
-    private _beforeHook: null | ((...args: T) => boolean | Promise<boolean>);
-    private _afterHook: null | ((...args: T) => void | Promise<void>);
+    private _beforeHook: null | ((...args: T) => (boolean | Promise<boolean>));
+    private _afterHook: null | ((...args: T) => (void | Promise<void>));
 
     private _sync: boolean;
 
@@ -26,13 +26,13 @@ export class SudooExpressHook<T extends any[]> {
         this._sync = false;
     }
 
-    public before(func: (...args: T) => boolean | Promise<boolean>): SudooExpressHook<T> {
+    public before(func: (...args: T) => (boolean | Promise<boolean>)): SudooExpressHook<T> {
 
         this._beforeHook = func;
         return this;
     }
 
-    public after(func: (...args: T) => void | Promise<void>): SudooExpressHook<T> {
+    public after(func: (...args: T) => (void | Promise<void>)): SudooExpressHook<T> {
 
         this._afterHook = func;
         return this;
@@ -50,13 +50,12 @@ export class SudooExpressHook<T extends any[]> {
 
         return async (req: SudooExpressRequest, res: SudooExpressResponse, next: SudooExpressNextFunction) => {
 
-
             if (_this._beforeHook) {
 
-                const isBeforeSucceed: boolean = await _this._beforeHook(...args);
+                const beforeHook = _this._beforeHook as (...args: T) => (boolean | Promise<boolean>);
+                const isBeforeSucceed: boolean = await beforeHook(...args);
 
                 if (!isBeforeSucceed) {
-
                     next();
                     return;
                 }
@@ -64,20 +63,18 @@ export class SudooExpressHook<T extends any[]> {
 
             if (_this._afterHook) {
 
-                const wrappedNext: () => (void | Promise<void>) = _this._sync ?
-                    (() => {
+                const afterHook = _this._afterHook as (...args: T) => (void | Promise<void>);
 
-                        this._afterHook(...args);
+                const wrappedNext: () => ((void | Promise<void>)) = _this._sync ?
+                    (() => {
+                        afterHook(...args);
                         next();
                     }) : (async () => {
-
-                        await _this._afterHook(...args);
+                        await afterHook(...args);
                         next();
                     });
-
                 handler(req, res, wrappedNext);
             } else {
-
                 handler(req, res, next);
             }
         };
