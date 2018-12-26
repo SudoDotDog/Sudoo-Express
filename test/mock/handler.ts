@@ -22,6 +22,8 @@ export class MockHandler {
 
     private constructor() {
 
+        this._called = [];
+
         this._req = {} as SudooExpressRequest;
         this._res = {} as SudooExpressResponse;
         this._next = () => this._called.push('NEXT');
@@ -37,6 +39,10 @@ export class MockHandler {
 
     public get next(): SudooExpressNextFunction {
         return this._next;
+    }
+
+    public get called(): string[] {
+        return this._called;
     }
 
     public request(partial: Partial<SudooExpressRequest>): MockHandler {
