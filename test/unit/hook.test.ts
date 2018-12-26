@@ -10,6 +10,7 @@ import * as Chance from 'chance';
 import { SudooExpressHandler, SudooExpressNextFunction, SudooExpressRequest, SudooExpressResponse } from '../../src/declare';
 import { SudooExpressHook } from '../../src/hook';
 import { MockHandler } from '../mock/handler';
+import { promiseSetTimeout } from '../mock/util';
 
 describe('Given {SudooExpressHook} class', (): void => {
 
@@ -82,7 +83,7 @@ describe('Given {SudooExpressHook} class', (): void => {
         expect(mock.called).to.be.deep.equal(['NEXT']);
     });
 
-    it('should be able to call after hook - sync mode', async (): Promise<void> => {
+    it('should be able to call after hook sync function', async (): Promise<void> => {
 
         const result: string[] = [];
         const expectValue: string = chance.string();
@@ -105,7 +106,7 @@ describe('Given {SudooExpressHook} class', (): void => {
         expect(mock.called).to.be.deep.equal(['NEXT']);
     });
 
-    it('should be able to call after hook - async mode', async (): Promise<void> => {
+    it('should be able to call after hook async function', async (): Promise<void> => {
 
         const result: string[] = [];
         const expectValue: string = chance.string();
@@ -113,7 +114,7 @@ describe('Given {SudooExpressHook} class', (): void => {
         const hook: SudooExpressHook<[string]> =
             SudooExpressHook.create<[string]>()
                 .before((a: string) => (result.push(a), true))
-                .after(async (a: string) => (await setTimeout(() => result.push(a), 13), undefined));
+                .after(async (a: string) => (await promiseSetTimeout(() => result.push(a), 13), undefined));
 
         const mock: MockHandler = MockHandler.create();
         const handler: SudooExpressHandler = hook.wrap(createMockHandler(() => result.push('NEXT')), expectValue);

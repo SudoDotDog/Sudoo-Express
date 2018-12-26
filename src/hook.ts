@@ -16,14 +16,10 @@ export class SudooExpressHook<T extends any[]> {
     private _beforeHook: null | ((...args: T) => (boolean | Promise<boolean>));
     private _afterHook: null | ((...args: T) => (void | Promise<void>));
 
-    private _sync: boolean;
-
     private constructor() {
 
         this._beforeHook = null;
         this._afterHook = null;
-
-        this._sync = false;
     }
 
     public before(func: (...args: T) => (boolean | Promise<boolean>)): SudooExpressHook<T> {
@@ -35,12 +31,6 @@ export class SudooExpressHook<T extends any[]> {
     public after(func: (...args: T) => (void | Promise<void>)): SudooExpressHook<T> {
 
         this._afterHook = func;
-        return this;
-    }
-
-    public setSync(sync: boolean): SudooExpressHook<T> {
-
-        this._sync = sync;
         return this;
     }
 
@@ -65,14 +55,10 @@ export class SudooExpressHook<T extends any[]> {
 
                 const afterHook = _this._afterHook as (...args: T) => (void | Promise<void>);
 
-                const wrappedNext: () => ((void | Promise<void>)) = _this._sync ?
-                    (() => {
-                        afterHook(...args);
-                        next();
-                    }) : (async () => {
-                        await afterHook(...args);
-                        next();
-                    });
+                const wrappedNext: () => ((void | Promise<void>)) = async () => {
+                    await afterHook(...args);
+                    next();
+                };
                 handler(req, res, wrappedNext);
             } else {
                 handler(req, res, next);
