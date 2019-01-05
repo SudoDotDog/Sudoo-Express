@@ -11,6 +11,7 @@ import { isString } from "util";
 import { SudooExpressApplication } from "./application";
 import { SudooExpressHandler } from "./declare";
 import { registerError, SUDOO_EXPRESS_ERROR_CODE } from "./error";
+import { createExpress } from "./express";
 import { createHeaderHandler, createResponseAgentHandler, createResponseSendHandler } from "./handlers";
 import { ISudooExpressRoute, ROUTE_MODE, SudooExpressHandlerGroup } from "./route";
 
@@ -31,7 +32,7 @@ export class SudooExpress {
 
     private constructor(app: SudooExpressApplication, error: ErrorCreationFunction) {
 
-        this._express = Express();
+        this._express = createExpress(app);
         this._application = app;
 
         this._errorCreator = error;

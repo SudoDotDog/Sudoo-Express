@@ -4,17 +4,27 @@
  * @description Handlers
  */
 
+import { NextFunction, Request, RequestHandler, Response } from "express";
 import { SudooExpressResponseAgent } from "./agent";
 import { SudooExpressApplication } from "./application";
-import { SudooExpressErrorHandler, SudooExpressHandler, SudooExpressNextFunction, SudooExpressRequest, SudooExpressResponse } from "./declare";
+import { SudooExpressHandler, SudooExpressNextFunction, SudooExpressRequest, SudooExpressResponse } from "./declare";
 import { ISudooExpressRoute } from "./route";
 
-export const createHeaderHandler = (app: SudooExpressApplication): SudooExpressHandler =>
-    (req: SudooExpressRequest, res: SudooExpressResponse, next: SudooExpressNextFunction) => {
+export const createAllowCrossOriginHandler = (app: SudooExpressApplication): RequestHandler =>
+    (req: Request, res: Response, next: NextFunction) => {
 
         if (app.crossOrigin) {
             res.header("Access-Control-Allow-Origin", app.crossOrigin);
         }
+
+        res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+
+        next();
+    };
+
+export const createHeaderHandler = (app: SudooExpressApplication): SudooExpressHandler =>
+    (req: SudooExpressRequest, res: SudooExpressResponse, next: SudooExpressNextFunction) => {
 
         res.header("X-Powered-By", app.appName);
         res.header("X-Version", app.version);
@@ -28,7 +38,6 @@ export const createResponseAgentHandler = (route: ISudooExpressRoute): SudooExpr
         req.authenticate = null;
         req.valid = false;
         (req as any).info = {};
-
         (res as any).agent = SudooExpressResponseAgent.create(res, route);
 
         next();
