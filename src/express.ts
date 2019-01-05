@@ -4,13 +4,24 @@
  * @description Express
  */
 
+import * as BodyParser from 'body-parser';
 import * as Express from "express";
 import { SudooExpressApplication } from ".";
-import { createAllowCrossOriginHandler } from "./handlers";
+import { createAllowCrossOriginHandler, createHeaderHandler } from "./handlers";
 
 export const createExpress = (app: SudooExpressApplication): Express.Express => {
 
     const express = Express();
+
+    if (app.bodyParser) {
+
+        express.use(BodyParser.json());
+        express.use(BodyParser.urlencoded({
+            extended: true,
+        }));
+    }
+
+    express.use(createHeaderHandler(app));
 
     if (app.crossOrigin) {
 

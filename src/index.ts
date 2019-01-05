@@ -71,7 +71,6 @@ export class SudooExpress {
 
         const handlers: SudooExpressHandler[] = [
 
-            createHeaderHandler(this._application),
             createResponseAgentHandler(route),
         ].concat(route.groups.reduce((previous: SudooExpressHandler[], group: SudooExpressHandlerGroup) => {
 

@@ -14,6 +14,7 @@ export class SudooExpressApplication {
     private readonly _appName: string;
     private readonly _version: string;
 
+    private _bodyParser: boolean;
     private _crossOrigin: string | null;
 
     private constructor(appName: string, version: string) {
@@ -21,6 +22,7 @@ export class SudooExpressApplication {
         this._appName = appName;
         this._version = version;
 
+        this._bodyParser = true;
         this._crossOrigin = null;
     }
 
@@ -34,6 +36,16 @@ export class SudooExpressApplication {
 
     public get crossOrigin(): string | null {
         return this._crossOrigin;
+    }
+
+    public get bodyParser(): boolean {
+        return this._bodyParser;
+    }
+
+    public disableBodyParser(): SudooExpressApplication {
+
+        this._bodyParser = false;
+        return this;
     }
 
     public allowCrossOrigin(path?: string): SudooExpressApplication {

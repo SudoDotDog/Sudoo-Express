@@ -13,18 +13,20 @@ import { ISudooExpressRoute } from "./route";
 export const createAllowCrossOriginHandler = (app: SudooExpressApplication): RequestHandler =>
     (req: Request, res: Response, next: NextFunction) => {
 
-        if (app.crossOrigin) {
-            res.header("Access-Control-Allow-Origin", app.crossOrigin);
+        if (!app.crossOrigin) {
+            next();
+            return;
         }
 
+        res.header("Access-Control-Allow-Origin", app.crossOrigin);
         res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 
         next();
     };
 
-export const createHeaderHandler = (app: SudooExpressApplication): SudooExpressHandler =>
-    (req: SudooExpressRequest, res: SudooExpressResponse, next: SudooExpressNextFunction) => {
+export const createHeaderHandler = (app: SudooExpressApplication): RequestHandler =>
+    (req: Request, res: Response, next: NextFunction) => {
 
         res.header("X-Powered-By", app.appName);
         res.header("X-Version", app.version);
