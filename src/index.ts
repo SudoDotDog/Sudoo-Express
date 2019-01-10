@@ -12,7 +12,7 @@ import { SudooExpressApplication } from "./application";
 import { SudooExpressHandler } from "./declare";
 import { registerError, SUDOO_EXPRESS_ERROR_CODE } from "./error";
 import { createExpress } from "./express";
-import { createHeaderHandler, createResponseAgentHandler, createResponseSendHandler } from "./handlers";
+import { createResponseAgentHandler, createResponseSendHandler } from "./handlers";
 import { ISudooExpressRoute, ROUTE_MODE, SudooExpressHandlerGroup } from "./route";
 
 export class SudooExpress {
@@ -64,6 +64,17 @@ export class SudooExpress {
 
         this._express.use(handler);
 
+        return this;
+    }
+
+    public routes(...routes: ISudooExpressRoute[]): SudooExpress {
+
+        return this.routeList(routes);
+    }
+
+    public routeList(routes: ISudooExpressRoute[]): SudooExpress {
+
+        routes.forEach((route: ISudooExpressRoute) => this.route(route));
         return this;
     }
 
