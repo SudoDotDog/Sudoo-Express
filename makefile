@@ -6,6 +6,8 @@ dev := typescript/tsconfig.dev.json
 tsc := node_modules/.bin/tsc
 mocha := node_modules/.bin/mocha
 
+.IGNORE: clean-linux
+
 main: dev
 
 dev:
@@ -33,16 +35,12 @@ install-prod:
 	@echo "[INFO] Installing Dependencies"
 	@yarn install --production=true
 
-clean:
-ifeq ($(OS), Windows_NT)
-	@echo "[INFO] Skipping"
-else
+clean-linux:
 	@echo "[INFO] Cleaning dist files"
 	@rm -rf dist
 	@rm -rf .nyc_output
 	@rm -rf coverage
-endif
 
-publish: install tests clean build
+publish: install tests clean-linux build
 	@echo "[INFO] Publishing package"
 	@npm publish --access=public
