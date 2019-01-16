@@ -67,6 +67,19 @@ export class SudooExpress {
         return this;
     }
 
+    public static(path: string, route?: string): SudooExpress {
+
+        if (route) {
+
+            this._express.use(route, Express.static(path));
+        } else {
+
+            this._express.use(Express.static(path));
+        }
+
+        return this;
+    }
+
     public routes(...routes: ISudooExpressRoute[]): SudooExpress {
 
         return this.routeList(routes);
