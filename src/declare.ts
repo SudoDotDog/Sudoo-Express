@@ -14,10 +14,9 @@ export enum SUDOO_EXPRESS_GROUP {
 
 export type SudooExpressRequest = {
     authenticate: any | null;
+    principal: any | null;
     valid: boolean;
-    readonly info: {
-        [key: string]: any;
-    };
+    readonly info: Record<string, any>;
 } & Request;
 export type SudooExpressResponse = {
     readonly agent: SudooExpressResponseAgent;

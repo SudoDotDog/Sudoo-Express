@@ -1,6 +1,6 @@
 {
   "name": "@sudoo/express",
-  "version": "1.7.4",
+  "version": "1.7.5",
   "description": ":stars: Express Wrapper",
   "main": "dist/index.js",
   "scripts": {
@@ -31,7 +31,9 @@
     "@types/express": "^4.16.0",
     "@types/node": "^10.12.18"
   },
-  "peerDependencies": {},
+  "peerDependencies": {
+    "@types/express": "^4.16.0"
+  },
   "nyc": {
     "extension": [
       ".ts"

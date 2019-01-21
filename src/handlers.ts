@@ -38,8 +38,10 @@ export const createResponseAgentHandler = (route: ISudooExpressRoute): SudooExpr
     (req: SudooExpressRequest, res: SudooExpressResponse, next: SudooExpressNextFunction) => {
 
         req.authenticate = null;
+        req.principal = null;
         req.valid = false;
         (req as any).info = {};
+
         (res as any).agent = SudooExpressResponseAgent.create(res, route);
 
         next();
