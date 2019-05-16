@@ -1,6 +1,6 @@
 {
   "name": "@sudoo/express",
-  "version": "1.7.5",
+  "version": "1.8.0",
   "description": ":stars: Express Wrapper",
   "main": "dist/index.js",
   "scripts": {
