@@ -7,7 +7,7 @@
 import { SudooExpressHandler, SudooExpressNextFunction, SudooExpressRequest, SudooExpressResponse } from "./declare";
 
 export const createAuthorizationTokenHandler = (protocol: string = 'bearer'): SudooExpressHandler =>
-    (req: SudooExpressRequest, res: SudooExpressResponse, next: SudooExpressNextFunction) => {
+    (req: SudooExpressRequest, _: SudooExpressResponse, next: SudooExpressNextFunction) => {
 
         const authHeader: string | undefined = req.header('authorization') || req.header('Authorization');
 
