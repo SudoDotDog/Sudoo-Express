@@ -12,7 +12,7 @@ import { SudooExpressApplication } from "./application";
 import { SudooExpressHandler } from "./declare";
 import { registerError, SUDOO_EXPRESS_ERROR_CODE } from "./error";
 import { createExpress } from "./express";
-import { createResponseAgentHandler, createResponseSendHandler } from "./handlers";
+import { createHealthCheckDirect, createResponseAgentHandler, createResponseSendHandler } from "./handlers";
 import { ISudooExpressRoute, ROUTE_MODE, SudooExpressHandlerGroup } from "./route";
 
 export class SudooExpress {
@@ -84,6 +84,12 @@ export class SudooExpress {
             this._express.use(Express.static(path));
         }
 
+        return this;
+    }
+
+    public health(path: string, response?: any): SudooExpress {
+
+        this._express.get(path, createHealthCheckDirect(response));
         return this;
     }
 

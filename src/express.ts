@@ -11,7 +11,7 @@ import { createAllowCrossOriginHandler, createHeaderHandler } from "./handlers";
 
 export const createExpress = (app: SudooExpressApplication): Express.Express => {
 
-    const express = Express();
+    const express: Express.Express = Express();
 
     if (app.bodyParser) {
 

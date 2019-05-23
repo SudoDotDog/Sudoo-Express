@@ -7,11 +7,6 @@
 import { Request, Response } from "express";
 import { SudooExpressResponseAgent } from './agent';
 
-export enum SUDOO_EXPRESS_GROUP {
-
-    HEADER = 'HEADER',
-}
-
 export type SudooExpressRequest = {
     authenticate: any;
     principal: any;

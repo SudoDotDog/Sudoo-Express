@@ -10,8 +10,16 @@ import { SudooExpressApplication } from "./application";
 import { SudooExpressHandler, SudooExpressNextFunction, SudooExpressRequest, SudooExpressResponse } from "./declare";
 import { ISudooExpressRoute } from "./route";
 
+export const createHealthCheckDirect = (response: any = {
+    status: 'UP',
+}): RequestHandler =>
+    (_: Request, res: Response) => {
+
+        res.status(200).send(response);
+    };
+
 export const createAllowCrossOriginHandler = (app: SudooExpressApplication): RequestHandler =>
-    (req: Request, res: Response, next: NextFunction) => {
+    (_: Request, res: Response, next: NextFunction) => {
 
         if (!app.crossOrigin) {
             next();
@@ -26,7 +34,7 @@ export const createAllowCrossOriginHandler = (app: SudooExpressApplication): Req
     };
 
 export const createHeaderHandler = (app: SudooExpressApplication): RequestHandler =>
-    (req: Request, res: Response, next: NextFunction) => {
+    (_: Request, res: Response, next: NextFunction) => {
 
         res.header("X-Powered-By", app.appName);
         res.header("X-Version", app.version);
@@ -48,7 +56,7 @@ export const createResponseAgentHandler = (route: ISudooExpressRoute): SudooExpr
     };
 
 export const createResponseSendHandler = (): SudooExpressHandler =>
-    (req: SudooExpressRequest, res: SudooExpressResponse, next: SudooExpressNextFunction) => {
+    (_: SudooExpressRequest, res: SudooExpressResponse, next: SudooExpressNextFunction) => {
 
         res.agent.send();
         next();

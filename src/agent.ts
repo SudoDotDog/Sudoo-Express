@@ -22,15 +22,14 @@ export class SudooExpressResponseAgent {
     private readonly _route: ISudooExpressRoute;
 
     private readonly _errorCreator: ErrorCreationFunction;
+    private readonly _successInfo: Map<string, any>;
 
     private _file: string | null;
     private _redirect: string | null;
-
     private _failInfo: {
         code: number;
         error: ConnorError;
     } | null;
-    private _successInfo: Map<string, any>;
 
     private constructor(res: Response, route: ISudooExpressRoute, errorCreator: ErrorCreationFunction) {
 
