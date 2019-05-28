@@ -23,6 +23,11 @@
   resolved "https://registry.yarnpkg.com/@sudoo/bark/-/bark-2.6.1.tgz#04ec9a269c451abb7765915e2c710b0382e816fc"
   integrity sha512-HTjzCNHqE6WFp9S4dhmAtWS7RE0UTV90EcnR6LM7X+SXCIjkBC0JhNhss8nptiT2sDTs76rRV4SCXs6QNExooQ==
 
+"@sudoo/bark@^2.6.3":
+  version "2.6.3"
+  resolved "https://registry.yarnpkg.com/@sudoo/bark/-/bark-2.6.3.tgz#b617d9c366ac7f99f4e8953fea10fbf52be6b32b"
+  integrity sha512-6Wmbjeqrx3rX7UBdNckj2ZkH+8LAtq9Lc28GhO5UoTrh5xtBQ+TVVAPYULuTd2C3GiOvC1nI9g0MgX7w5rux7Q==
+
 "@sudoo/io@^1.6.0":
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/@sudoo/io/-/io-1.6.0.tgz#efc631a04d55419ba1001a467b7151c7c070dfce"
@@ -370,7 +375,7 @@ etag@~1.8.1:
   resolved "https://registry.yarnpkg.com/etag/-/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
   integrity sha1-Qa4u62XvpiJorr/qg6x9eSmbCIc=
 
-express@^4.17.0:
+express@^4.17.1:
   version "4.17.1"
   resolved "https://registry.yarnpkg.com/express/-/express-4.17.1.tgz#4491fc38605cf51f8629d39c2b5d026f98a4c134"
   integrity sha512-mHJ9O79RqluphRrcw2X/GTh3k9tVv8YcoyY4Kkh4WDMUYKRZUq0h1o0w2rrrxBqM7VoeUVqgb27xlEMXTnYt4g==

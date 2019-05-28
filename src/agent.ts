@@ -52,6 +52,14 @@ export class SudooExpressResponseAgent {
         return this;
     }
 
+    public addIfExist(name: string, value: any | undefined | null): SudooExpressResponseAgent {
+
+        if (value === undefined || value === null) {
+            return this;
+        }
+        return this.add(name, value);
+    }
+
     public smart(path: string): SudooExpressResponseAgent {
 
         if (path.substring(0, 4) === 'http') {
