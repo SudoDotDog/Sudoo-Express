@@ -4,7 +4,7 @@
  * @description Agent
  */
 
-import Connor, { ConnorError, ErrorCreationFunction } from 'connor';
+import { Connor, ConnorError, ErrorCreationFunction } from 'connor';
 import { Response } from "express";
 import { SudooExpressErrorHandler, SudooExpressNextFunction } from './declare';
 import { registerError, SUDOO_EXPRESS_ERROR_CODE } from './error';

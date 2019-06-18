@@ -4,7 +4,7 @@
  * @description Base
  */
 
-import Connor, { ErrorCreationFunction } from "connor";
+import { Connor, ErrorCreationFunction } from "connor";
 import * as Express from "express";
 import * as Http from "http";
 import { isString } from "util";
