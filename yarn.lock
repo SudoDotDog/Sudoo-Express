@@ -23,10 +23,10 @@
   resolved "https://registry.yarnpkg.com/@sudoo/bark/-/bark-2.6.1.tgz#04ec9a269c451abb7765915e2c710b0382e816fc"
   integrity sha512-HTjzCNHqE6WFp9S4dhmAtWS7RE0UTV90EcnR6LM7X+SXCIjkBC0JhNhss8nptiT2sDTs76rRV4SCXs6QNExooQ==
 
-"@sudoo/bark@^2.6.3":
-  version "2.6.3"
-  resolved "https://registry.yarnpkg.com/@sudoo/bark/-/bark-2.6.3.tgz#b617d9c366ac7f99f4e8953fea10fbf52be6b32b"
-  integrity sha512-6Wmbjeqrx3rX7UBdNckj2ZkH+8LAtq9Lc28GhO5UoTrh5xtBQ+TVVAPYULuTd2C3GiOvC1nI9g0MgX7w5rux7Q==
+"@sudoo/bark@^2.7.1":
+  version "2.7.1"
+  resolved "https://registry.yarnpkg.com/@sudoo/bark/-/bark-2.7.1.tgz#84b9db0be3aa7b4d6896ced81d9fa9aac96578ef"
+  integrity sha512-0zBFbIQAtu3XNJkFPszdljYXXIPXzR63qypfTwFRupmu3gxgfBMtdPShbQebGuGG0KQEmXasGMBQVi2O0jWbbQ==
 
 "@sudoo/io@^1.6.0":
   version "1.6.0"
@@ -91,7 +91,7 @@
     "@types/node" "*"
     "@types/range-parser" "*"
 
-"@types/express@^4.16.1":
+"@types/express@^4.17.0":
   version "4.17.0"
   resolved "https://registry.yarnpkg.com/@types/express/-/express-4.17.0.tgz#49eaedb209582a86f12ed9b725160f12d04ef287"
   integrity sha512-CjaMu57cjgjuZbh9DpkloeGxV45CnMGlVd+XpG7Gm9QgVrd7KFq+X4HY0vM+2v0bczS48Wg7bvnMY5TN+Xmcfw==
@@ -281,6 +281,11 @@ connor@^2.4.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/connor/-/connor-2.4.0.tgz#af25da66e2bc5d9861595b2992ccda2bb4316d73"
   integrity sha512-8Kwp8LEWxJyW/n5ApHAi34WvxblPzOODXMso3OZJE/gpWdK6vRl7MhVy4/ZSCrIjHvWNNOumhbvEM4GocQgdcA==
+
+connor@^2.5.1:
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/connor/-/connor-2.5.1.tgz#bf9ca2b77d363bc78b78fb23aaf143a3b5ce171b"
+  integrity sha512-t65hAFdl34SLOpjWKxAHuGpbjqXG9CdGunyF6M+J5uuaU9BILVVEwD3M4oqD1sChJK8unuIOzNHhqTDMVz1QqA==
 
 content-disposition@0.5.3:
   version "0.5.3"
