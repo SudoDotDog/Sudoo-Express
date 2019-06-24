@@ -24,6 +24,7 @@ export class SudooExpressResponseAgent {
     private readonly _errorCreator: ErrorCreationFunction;
     private readonly _successInfo: Map<string, any>;
 
+    private _raw: any | null;
     private _file: string | null;
     private _redirect: string | null;
     private _buffer: {
@@ -42,6 +43,7 @@ export class SudooExpressResponseAgent {
 
         this._errorCreator = errorCreator;
 
+        this._raw = null;
         this._file = null;
         this._redirect = null;
         this._buffer = null;
@@ -78,7 +80,7 @@ export class SudooExpressResponseAgent {
     public redirect(path: string): SudooExpressResponseAgent {
 
         this._checkFailed();
-        this._expectClean(this._file, this._successInfo.size > 0, this._redirect, this._buffer);
+        this._expectClean(this._file, this._successInfo.size > 0, this._redirect, this._buffer, this._raw);
 
         this._redirect = path;
         return this;
@@ -87,7 +89,7 @@ export class SudooExpressResponseAgent {
     public buffer(binary: any, type: string): SudooExpressResponseAgent {
 
         this._checkFailed();
-        this._expectClean(this._file, this._successInfo.size > 0, this._redirect, this._buffer);
+        this._expectClean(this._file, this._successInfo.size > 0, this._redirect, this._buffer, this._raw);
 
         this._buffer = {
             binary,
@@ -96,10 +98,19 @@ export class SudooExpressResponseAgent {
         return this;
     }
 
+    public raw(content: any): SudooExpressResponseAgent {
+
+        this._checkFailed();
+        this._expectClean(this._file, this._successInfo.size > 0, this._redirect, this._buffer, this._raw);
+
+        this._raw = content;
+        return this;
+    }
+
     public addFile(path: string): SudooExpressResponseAgent {
 
         this._checkFailed();
-        this._expectClean(this._file, this._successInfo.size > 0, this._redirect, this._buffer);
+        this._expectClean(this._file, this._successInfo.size > 0, this._redirect, this._buffer, this._raw);
 
         this._file = path;
         return this;
@@ -122,6 +133,9 @@ export class SudooExpressResponseAgent {
 
             const { code, message } = errorHandler(this._failInfo.code, this._failInfo.error);
             this._res.status(code).send(message);
+        } else if (this._raw) {
+
+            this._res.status(200).send(this._raw);
         } else if (this._file) {
 
             this._res.status(200).sendFile(this._file);
