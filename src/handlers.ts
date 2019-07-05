@@ -28,7 +28,14 @@ export const createAllowCrossOriginHandler = (app: SudooExpressApplication): Req
 
         res.header("Access-Control-Allow-Origin", app.crossOrigin);
         res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
-        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+        res.header("Access-Control-Allow-Headers", [
+            "Origin",
+            "X-Requested-With",
+            "Content-Type",
+            "Accept",
+            "Authorization",
+            ...app.crossOriginAllowHeaders,
+        ].join(", "));
 
         next();
     };

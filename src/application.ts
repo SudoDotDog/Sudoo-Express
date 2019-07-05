@@ -16,6 +16,7 @@ export class SudooExpressApplication {
 
     private _bodyParser: boolean;
     private _crossOrigin: string | null;
+    private _crossOriginAllowHeaders: string[];
 
     private constructor(appName: string, version: string) {
 
@@ -24,6 +25,7 @@ export class SudooExpressApplication {
 
         this._bodyParser = true;
         this._crossOrigin = null;
+        this._crossOriginAllowHeaders = [];
     }
 
     public get appName(): string {
@@ -36,6 +38,10 @@ export class SudooExpressApplication {
 
     public get crossOrigin(): string | null {
         return this._crossOrigin;
+    }
+
+    public get crossOriginAllowHeaders(): string[] {
+        return this._crossOriginAllowHeaders;
     }
 
     public get bodyParser(): boolean {
@@ -54,6 +60,12 @@ export class SudooExpressApplication {
             ? path
             : '*';
 
+        return this;
+    }
+
+    public setCrossOriginAllowHeaders(...headers: string[]): SudooExpressApplication {
+
+        this._crossOriginAllowHeaders = headers;
         return this;
     }
 }
