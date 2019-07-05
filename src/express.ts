@@ -6,7 +6,7 @@
 
 import * as BodyParser from 'body-parser';
 import * as Express from "express";
-import { SudooExpressApplication } from ".";
+import { SudooExpressApplication } from "./application";
 import { createAllowCrossOriginHandler, createHeaderHandler } from "./handlers";
 
 export const createExpress = (app: SudooExpressApplication): Express.Express => {

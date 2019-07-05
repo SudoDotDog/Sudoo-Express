@@ -5,7 +5,7 @@
  */
 
 import { Request, Response } from "express";
-import { SudooExpressResponseAgent } from './agent';
+import { SudooExpressResponseAgent } from "./agent";
 
 export type SudooExpressRequest = {
     authenticate: any;

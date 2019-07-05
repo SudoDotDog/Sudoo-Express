@@ -4,11 +4,12 @@
  * @description Agent
  */
 
-import { Connor, ConnorError, ErrorCreationFunction } from 'connor';
+import { _Map } from "@sudoo/bark/map";
+import { Connor, ConnorError, ErrorCreationFunction } from "connor";
 import { Response } from "express";
-import { SudooExpressErrorHandler, SudooExpressNextFunction } from './declare';
-import { registerError, SUDOO_EXPRESS_ERROR_CODE } from './error';
-import { ISudooExpressRoute } from './route';
+import { SudooExpressErrorHandler, SudooExpressNextFunction } from "./declare";
+import { registerError, SUDOO_EXPRESS_ERROR_CODE } from "./error";
+import { ISudooExpressRoute } from "./route";
 
 export class SudooExpressResponseAgent {
 
@@ -56,6 +57,16 @@ export class SudooExpressResponseAgent {
 
         this._expectClean(this._file, this._redirect);
         this._successInfo.set(name, value);
+        return this;
+    }
+
+    public migrate(map: Record<string, any>): SudooExpressResponseAgent {
+
+        const keys: string[] = _Map.keys(map);
+
+        for (const key of keys) {
+            this.add(key, map[key]);
+        }
         return this;
     }
 
