@@ -28,6 +28,7 @@ export class SudooExpressResponseAgent {
     private _raw: any | null;
     private _file: string | null;
     private _redirect: string | null;
+    private _binary: any | null;
     private _buffer: {
         readonly binary: any;
         readonly type: string;
@@ -47,6 +48,7 @@ export class SudooExpressResponseAgent {
         this._raw = null;
         this._file = null;
         this._redirect = null;
+        this._binary = null;
         this._buffer = null;
 
         this._failInfo = null;
@@ -55,7 +57,7 @@ export class SudooExpressResponseAgent {
 
     public add(name: string, value: any): SudooExpressResponseAgent {
 
-        this._expectClean(this._file, this._redirect);
+        this._expectOtherClean();
         this._successInfo.set(name, value);
         return this;
     }
@@ -91,7 +93,7 @@ export class SudooExpressResponseAgent {
     public redirect(path: string): SudooExpressResponseAgent {
 
         this._checkFailed();
-        this._expectClean(this._file, this._successInfo.size > 0, this._redirect, this._buffer, this._raw);
+        this._expectAllClean();
 
         this._redirect = path;
         return this;
@@ -100,7 +102,7 @@ export class SudooExpressResponseAgent {
     public buffer(binary: any, type: string): SudooExpressResponseAgent {
 
         this._checkFailed();
-        this._expectClean(this._file, this._successInfo.size > 0, this._redirect, this._buffer, this._raw);
+        this._expectAllClean();
 
         this._buffer = {
             binary,
@@ -109,10 +111,19 @@ export class SudooExpressResponseAgent {
         return this;
     }
 
+    public binary(binary: any): SudooExpressResponseAgent {
+
+        this._checkFailed();
+        this._expectAllClean();
+
+        this._binary = binary;
+        return this;
+    }
+
     public raw(content: any): SudooExpressResponseAgent {
 
         this._checkFailed();
-        this._expectClean(this._file, this._successInfo.size > 0, this._redirect, this._buffer, this._raw);
+        this._expectAllClean();
 
         this._raw = content;
         return this;
@@ -121,7 +132,7 @@ export class SudooExpressResponseAgent {
     public addFile(path: string): SudooExpressResponseAgent {
 
         this._checkFailed();
-        this._expectClean(this._file, this._successInfo.size > 0, this._redirect, this._buffer, this._raw);
+        this._expectAllClean();
 
         this._file = path;
         return this;
@@ -154,6 +165,9 @@ export class SudooExpressResponseAgent {
 
             this._res.contentType(this._buffer.type);
             this._res.status(200).send(this._buffer);
+        } else if (this._binary) {
+
+            this._res.status(200).end(this._binary, 'binary');
         } else if (this._redirect) {
 
             this._res.redirect(this._redirect);
@@ -193,6 +207,16 @@ export class SudooExpressResponseAgent {
         }
 
         return next;
+    }
+
+    private _expectAllClean(): void {
+
+        this._expectClean(this._file, this._binary, this._successInfo.size > 0, this._redirect, this._buffer, this._raw);
+    }
+
+    private _expectOtherClean(): void {
+
+        this._expectClean(this._file, this._binary, this._redirect, this._buffer, this._raw);
     }
 
     private _expectClean(...conditions: any[]): void {
