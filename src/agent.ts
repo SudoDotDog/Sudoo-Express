@@ -51,6 +51,7 @@ export class SudooExpressResponseAgent {
         this._redirect = null;
         this._binary = null;
         this._buffer = null;
+        this._download = null;
 
         this._failInfo = null;
         this._successInfo = new Map<string, any>();
