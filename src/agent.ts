@@ -29,6 +29,7 @@ export class SudooExpressResponseAgent {
     private _file: string | null;
     private _redirect: string | null;
     private _binary: any | null;
+    private _download: any | null;
     private _buffer: {
         readonly binary: any;
         readonly type: string;
@@ -96,6 +97,15 @@ export class SudooExpressResponseAgent {
         this._expectAllClean();
 
         this._redirect = path;
+        return this;
+    }
+
+    public download(content: any): SudooExpressResponseAgent {
+
+        this._checkFailed();
+        this._expectAllClean();
+
+        this.download = content;
         return this;
     }
 
@@ -168,6 +178,9 @@ export class SudooExpressResponseAgent {
         } else if (this._binary) {
 
             this._res.status(200).end(this._binary, 'binary');
+        } else if (this._download) {
+
+            this._res.download(this._download);
         } else if (this._redirect) {
 
             this._res.redirect(this._redirect);
@@ -211,12 +224,12 @@ export class SudooExpressResponseAgent {
 
     private _expectAllClean(): void {
 
-        this._expectClean(this._file, this._binary, this._successInfo.size > 0, this._redirect, this._buffer, this._raw);
+        this._expectClean(this._file, this._binary, this._successInfo.size > 0, this._redirect, this._buffer, this._raw, this._download);
     }
 
     private _expectOtherClean(): void {
 
-        this._expectClean(this._file, this._binary, this._redirect, this._buffer, this._raw);
+        this._expectClean(this._file, this._binary, this._redirect, this._buffer, this._raw, this._download);
     }
 
     private _expectClean(...conditions: any[]): void {
