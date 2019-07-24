@@ -16,7 +16,7 @@ export const createBasicAuthorizationTokenHandler = (): SudooExpressHandler => {
     return createAuthorizationTokenHandler('basic');
 };
 
-export const createAuthorizationTokenHandler = (protocol): SudooExpressHandler =>
+export const createAuthorizationTokenHandler = (protocol: string): SudooExpressHandler =>
     (req: SudooExpressRequest, _: SudooExpressResponse, next: SudooExpressNextFunction) => {
 
         const authHeader: string | undefined = req.header('authorization') || req.header('Authorization');
