@@ -6,6 +6,50 @@
 
 import { SudooExpressHandler, SudooExpressNextFunction, SudooExpressRequest, SudooExpressResponse } from "./declare";
 
+export const createQueryAuthorizationTokenHandler = (key: string): SudooExpressHandler =>
+    (req: SudooExpressRequest, _: SudooExpressResponse, next: SudooExpressNextFunction) => {
+
+        const authHeader: string | undefined = req.query[key];
+
+        if (!authHeader) {
+            req.principal = null;
+            next();
+            return;
+        }
+
+        if (!authHeader || authHeader.length <= 7) {
+            req.principal = null;
+            next();
+            return;
+        }
+
+        req.principal = authHeader;
+        next();
+        return;
+    };
+
+export const createBodyAuthorizationTokenHandler = (key: string): SudooExpressHandler =>
+    (req: SudooExpressRequest, _: SudooExpressResponse, next: SudooExpressNextFunction) => {
+
+        const authHeader: string | undefined = req.body[key];
+
+        if (!authHeader) {
+            req.principal = null;
+            next();
+            return;
+        }
+
+        if (!authHeader || authHeader.length <= 7) {
+            req.principal = null;
+            next();
+            return;
+        }
+
+        req.principal = authHeader;
+        next();
+        return;
+    };
+
 export const createBearerAuthorizationTokenHandler = (): SudooExpressHandler => {
 
     return createAuthorizationTokenHandler('bearer');
