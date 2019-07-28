@@ -7,6 +7,7 @@
 import { Connor, ErrorCreationFunction } from "connor";
 import * as Express from "express";
 import * as Http from "http";
+import * as ServeStatic from "serve-static";
 import { isString } from "util";
 import { SudooExpressApplication } from "./application";
 import { SudooExpressHandler } from "./declare";
@@ -74,14 +75,14 @@ export class SudooExpress {
         return this;
     }
 
-    public static(path: string, route?: string): SudooExpress {
+    public static(path: string, options?: ServeStatic.ServeStaticOptions, route?: string): SudooExpress {
 
         if (route) {
 
-            this._express.use(route, Express.static(path));
+            this._express.use(route, Express.static(path, options));
         } else {
 
-            this._express.use(Express.static(path));
+            this._express.use(Express.static(path, options));
         }
 
         return this;
