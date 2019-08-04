@@ -29,7 +29,11 @@ export class SudooExpressResponseAgent {
     private _file: string | null;
     private _redirect: string | null;
     private _binary: any | null;
-    private _download: any | null;
+    private _attachment: {
+        readonly content: string;
+        readonly filename: string;
+        readonly type?: string;
+    } | null;
     private _buffer: {
         readonly binary: any;
         readonly type: string;
@@ -51,7 +55,7 @@ export class SudooExpressResponseAgent {
         this._redirect = null;
         this._binary = null;
         this._buffer = null;
-        this._download = null;
+        this._attachment = null;
 
         this._failInfo = null;
         this._successInfo = new Map<string, any>();
@@ -101,12 +105,16 @@ export class SudooExpressResponseAgent {
         return this;
     }
 
-    public download(content: any): SudooExpressResponseAgent {
+    public attachment(content: string, filename: string, type?: string): SudooExpressResponseAgent {
 
         this._checkFailed();
         this._expectAllClean();
 
-        this.download = content;
+        this._attachment = {
+            content,
+            filename,
+            type,
+        };
         return this;
     }
 
@@ -179,9 +187,13 @@ export class SudooExpressResponseAgent {
         } else if (this._binary) {
 
             this._res.status(200).end(this._binary, 'binary');
-        } else if (this._download) {
+        } else if (this._attachment) {
 
-            this._res.download(this._download);
+            if (this._attachment.type) {
+                this._res.type(this._attachment.type);
+            }
+            this._res.attachment(this._attachment.filename);
+            this._res.send(this._attachment.content);
         } else if (this._redirect) {
 
             this._res.redirect(this._redirect);
@@ -225,12 +237,12 @@ export class SudooExpressResponseAgent {
 
     private _expectAllClean(): void {
 
-        this._expectClean(this._file, this._binary, this._successInfo.size > 0, this._redirect, this._buffer, this._raw, this._download);
+        this._expectClean(this._file, this._binary, this._successInfo.size > 0, this._redirect, this._buffer, this._raw, this._attachment);
     }
 
     private _expectOtherClean(): void {
 
-        this._expectClean(this._file, this._binary, this._redirect, this._buffer, this._raw, this._download);
+        this._expectClean(this._file, this._binary, this._redirect, this._buffer, this._raw, this._attachment);
     }
 
     private _expectClean(...conditions: any[]): void {
