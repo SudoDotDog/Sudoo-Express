@@ -17,13 +17,15 @@ export const createQueryAuthorizationTokenHandler = (key: string): SudooExpressH
             return;
         }
 
-        if (!authHeader || authHeader.length <= 7) {
+        const decoded: string = decodeURIComponent(authHeader);
+
+        if (!decoded || decoded.length <= 7) {
             req.principal = null;
             next();
             return;
         }
 
-        req.principal = authHeader;
+        req.principal = decoded;
         next();
         return;
     };
@@ -49,16 +51,6 @@ export const createBodyAuthorizationTokenHandler = (key: string): SudooExpressHa
         next();
         return;
     };
-
-export const createBearerAuthorizationTokenHandler = (): SudooExpressHandler => {
-
-    return createAuthorizationTokenHandler('bearer');
-};
-
-export const createBasicAuthorizationTokenHandler = (): SudooExpressHandler => {
-
-    return createAuthorizationTokenHandler('basic');
-};
 
 export const createAuthorizationTokenHandler = (protocol: string): SudooExpressHandler =>
     (req: SudooExpressRequest, _: SudooExpressResponse, next: SudooExpressNextFunction) => {
@@ -98,3 +90,13 @@ export const createAuthorizationTokenHandler = (protocol: string): SudooExpressH
         next();
         return;
     };
+
+export const createBearerAuthorizationTokenHandler = (): SudooExpressHandler => {
+
+    return createAuthorizationTokenHandler('bearer');
+};
+
+export const createBasicAuthorizationTokenHandler = (): SudooExpressHandler => {
+
+    return createAuthorizationTokenHandler('basic');
+};
