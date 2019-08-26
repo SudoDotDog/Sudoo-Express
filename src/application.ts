@@ -15,6 +15,7 @@ export class SudooExpressApplication {
     private readonly _version: string;
 
     private _bodyParser: boolean;
+    private _bodyParserLimit: string;
     private _crossOrigin: string | null;
     private _crossOriginAllowHeaders: string[];
 
@@ -24,6 +25,7 @@ export class SudooExpressApplication {
         this._version = version;
 
         this._bodyParser = true;
+        this._bodyParserLimit = '100kb';
         this._crossOrigin = null;
         this._crossOriginAllowHeaders = [];
     }
@@ -46,6 +48,16 @@ export class SudooExpressApplication {
 
     public get bodyParser(): boolean {
         return this._bodyParser;
+    }
+
+    public get bodyParserLimit(): string {
+        return this._bodyParserLimit;
+    }
+
+    public setBodyParserLimit(limit: string): this {
+
+        this._bodyParserLimit = limit;
+        return this;
     }
 
     public disableBodyParser(): SudooExpressApplication {

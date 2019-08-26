@@ -15,8 +15,11 @@ export const createExpress = (app: SudooExpressApplication): Express.Express => 
 
     if (app.bodyParser) {
 
-        express.use(BodyParser.json());
+        express.use(BodyParser.json({
+            limit: app.bodyParserLimit,
+        }));
         express.use(BodyParser.urlencoded({
+            limit: app.bodyParserLimit,
             extended: true,
         }));
     }
