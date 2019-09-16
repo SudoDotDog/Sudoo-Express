@@ -88,9 +88,18 @@ export class SudooExpress {
         return this;
     }
 
-    public health(path: string, response?: any): SudooExpress {
+    public health(
+        path: string,
+        isHealthyFunction: () => boolean = () => true,
+        succeedResponse: any = {
+            status: 'UP',
+        },
+        failedResponse: any = {
+            status: 'DOWN',
+        },
+    ): SudooExpress {
 
-        this._express.get(path, createHealthCheckDirect(response));
+        this._express.get(path, createHealthCheckDirect(isHealthyFunction, succeedResponse, failedResponse));
         return this;
     }
 

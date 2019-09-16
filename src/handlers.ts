@@ -10,13 +10,20 @@ import { SudooExpressApplication } from "./application";
 import { SudooExpressHandler, SudooExpressNextFunction, SudooExpressRequest, SudooExpressResponse } from "./declare";
 import { ISudooExpressRoute } from "./route";
 
-export const createHealthCheckDirect = (response: any = {
-    status: 'UP',
-}): RequestHandler =>
-    (_: Request, res: Response) => {
+export const createHealthCheckDirect = (
+    isHealthyFunction: () => boolean,
+    succeedResponse: any,
+    failedResponse: any,
+): RequestHandler => (_: Request, res: Response) => {
 
-        res.status(200).send(response);
-    };
+    const isHealthy: boolean = isHealthyFunction();
+
+    if (isHealthy) {
+        res.status(200).send(succeedResponse);
+    } else {
+        res.status(500).send(failedResponse);
+    }
+};
 
 export const createAllowCrossOriginHandler = (app: SudooExpressApplication): RequestHandler =>
     (_: Request, res: Response, next: NextFunction) => {
