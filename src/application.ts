@@ -66,15 +66,23 @@ export class SudooExpressApplication {
         return this;
     }
 
-    public useCookieParser(): this {
-
-        this._cookieParser = true;
+    public useBodyParser(): this {
+        this._bodyParser = true;
         return this;
     }
 
     public disableBodyParser(): this {
-
         this._bodyParser = false;
+        return this;
+    }
+
+    public useCookieParser(): this {
+        this._cookieParser = true;
+        return this;
+    }
+
+    public disableCookieParser(): this {
+        this._cookieParser = false;
         return this;
     }
 
