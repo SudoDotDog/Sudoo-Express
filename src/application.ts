@@ -16,7 +16,10 @@ export class SudooExpressApplication {
 
     private _bodyParser: boolean;
     private _bodyParserLimit: string;
+
     private _cookieParser: boolean;
+    private _cookieParserSecret: string | string[] | null;
+
     private _crossOrigin: string | null;
     private _crossOriginAllowHeaders: string[];
 
@@ -25,9 +28,12 @@ export class SudooExpressApplication {
         this._appName = appName;
         this._version = version;
 
-        this._bodyParser = true;
+        this._bodyParser = false;
         this._bodyParserLimit = '100kb';
+
         this._cookieParser = false;
+        this._cookieParserSecret = null;
+
         this._crossOrigin = null;
         this._crossOriginAllowHeaders = [];
     }
@@ -60,6 +66,10 @@ export class SudooExpressApplication {
         return this._cookieParser;
     }
 
+    public get cookieParserSecret(): string | string[] | null {
+        return this._cookieParserSecret;
+    }
+
     public setBodyParserLimit(limit: string): this {
 
         this._bodyParserLimit = limit;
@@ -78,6 +88,11 @@ export class SudooExpressApplication {
 
     public useCookieParser(): this {
         this._cookieParser = true;
+        return this;
+    }
+
+    public setCookieParserSecret(secret: string | string[]): this {
+        this._cookieParserSecret = secret;
         return this;
     }
 

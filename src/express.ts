@@ -27,6 +27,9 @@ export const createExpress = (app: SudooExpressApplication): Express.Express => 
 
     if (app.cookieParser) {
 
+        if (app.cookieParserSecret) {
+            express.use(CookieParser(app.cookieParserSecret));
+        }
         express.use(CookieParser());
     }
 
