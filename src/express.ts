@@ -5,6 +5,7 @@
  */
 
 import * as BodyParser from 'body-parser';
+import * as CookieParser from "cookie-parser";
 import * as Express from "express";
 import { SudooExpressApplication } from "./application";
 import { createAllowCrossOriginHandler, createHeaderHandler } from "./handlers";
@@ -22,6 +23,11 @@ export const createExpress = (app: SudooExpressApplication): Express.Express => 
             limit: app.bodyParserLimit,
             extended: true,
         }));
+    }
+
+    if (app.cookieParser) {
+
+        express.use(CookieParser());
     }
 
     express.use(createHeaderHandler(app));
