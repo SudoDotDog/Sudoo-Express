@@ -48,7 +48,7 @@ export class SudooExpress {
         return this._application;
     }
 
-    public group(groupName: string, handlers: SudooExpressHandler[]): SudooExpress {
+    public group(groupName: string, handlers: SudooExpressHandler[]): this {
 
         if (this._groups.has(groupName)) {
 
@@ -60,7 +60,7 @@ export class SudooExpress {
         return this;
     }
 
-    public host(port: number): SudooExpress {
+    public host(port: number): this {
 
         const server: Http.Server = Http.createServer(this._express);
         server.listen(port);
@@ -68,14 +68,14 @@ export class SudooExpress {
         return this;
     }
 
-    public use(handler: Express.Handler): SudooExpress {
+    public use(handler: Express.Handler): this {
 
         this._express.use(handler);
 
         return this;
     }
 
-    public static(path: string, options?: ServeStatic.ServeStaticOptions, route?: string): SudooExpress {
+    public static(path: string, options?: ServeStatic.ServeStaticOptions, route?: string): this {
 
         if (route) {
 
@@ -97,24 +97,24 @@ export class SudooExpress {
         failedResponse: any = {
             status: 'DOWN',
         },
-    ): SudooExpress {
+    ): this {
 
         this._express.get(path, createHealthCheckDirect(isHealthyFunction, succeedResponse, failedResponse));
         return this;
     }
 
-    public routes(...routes: ISudooExpressRoute[]): SudooExpress {
+    public routes(...routes: ISudooExpressRoute[]): this {
 
         return this.routeList(routes);
     }
 
-    public routeList(routes: ISudooExpressRoute[]): SudooExpress {
+    public routeList(routes: ISudooExpressRoute[]): this {
 
         routes.forEach((route: ISudooExpressRoute) => this.route(route));
         return this;
     }
 
-    public route(route: ISudooExpressRoute): SudooExpress {
+    public route(route: ISudooExpressRoute): this {
 
         const handlers: SudooExpressHandler[] = [
 
