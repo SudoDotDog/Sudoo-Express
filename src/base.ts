@@ -93,9 +93,11 @@ export class SudooExpress {
         isHealthyFunction: () => boolean = () => true,
         succeedResponse: any = {
             status: 'UP',
+            version: this._application.version,
         },
         failedResponse: any = {
             status: 'DOWN',
+            version: this._application.version,
         },
     ): this {
 
