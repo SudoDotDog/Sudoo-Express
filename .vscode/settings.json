@@ -4,6 +4,7 @@
         "Encryptable",
         "RMRF",
         "WMXPY",
+        "codecov",
         "deserialize",
         "ifeq",
         "setx",
