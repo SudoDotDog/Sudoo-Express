@@ -93,7 +93,7 @@
     "@types/node" "*"
     "@types/range-parser" "*"
 
-"@types/express@*", "@types/express@^4.17.1":
+"@types/express@*", "@types/express@^4.17.2":
   version "4.17.2"
   resolved "https://registry.yarnpkg.com/@types/express/-/express-4.17.2.tgz#a0fb7a23d8855bac31bc01d5a58cadd9b2173e6c"
   integrity sha512-5mHFNyavtLoJmnusB8OKJ5bshSzw+qkMIBAobLrIM48HJvunFva9mOa6aBwh64lBFyNwBbs0xiEFuj4eU/NjCA==
@@ -278,6 +278,11 @@ connor@^2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/connor/-/connor-2.6.0.tgz#1ffc2ebc60c2fa0908afd22bc763c74fd6dd4a0f"
   integrity sha512-8y18++OijPHvT3C8d57Z2I3xTFgLJU4hyphsty19kja1KqtgZDFmBwRPZ2zaJHlJZzMAvztVClv30WAaT2l6SA==
+
+connor@^2.6.1:
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/connor/-/connor-2.6.1.tgz#a25bdd3c84a2b79325496e5d18de68be81da5481"
+  integrity sha512-V2RiLFaZoDIy1GAXoD7I57c90xVWlgRewMGLyRHhMAMmopHzSnDm2EswUj0n5CdEAxHld6/RI+sxUgUquXftyQ==
 
 content-disposition@0.5.3:
   version "0.5.3"
