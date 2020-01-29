@@ -4,6 +4,7 @@
  * @description Handlers
  */
 
+import { HTTP_RESPONSE_CODE } from "@sudoo/magic";
 import { NextFunction, Request, RequestHandler, Response } from "express";
 import { SudooExpressResponseAgent } from "./agent";
 import { SudooExpressApplication } from "./application";
@@ -19,9 +20,9 @@ export const createHealthCheckDirect = (
     const isHealthy: boolean = isHealthyFunction();
 
     if (isHealthy) {
-        res.status(200).send(succeedResponse);
+        res.status(HTTP_RESPONSE_CODE.OK).send(succeedResponse);
     } else {
-        res.status(500).send(failedResponse);
+        res.status(HTTP_RESPONSE_CODE.SERVICE_UNAVAILABLE).send(failedResponse);
     }
 };
 

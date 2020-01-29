@@ -5,6 +5,7 @@
  */
 
 import { _Map } from "@sudoo/bark/map";
+import { HTTP_RESPONSE_CODE } from "@sudoo/magic";
 import { Connor, ConnorError, ErrorCreationFunction } from "connor";
 import { Response } from "express";
 import { SudooExpressErrorHandler, SudooExpressNextFunction } from "./declare";
@@ -88,6 +89,7 @@ export class SudooExpressResponseAgent {
 
     public smart(path: string): SudooExpressResponseAgent {
 
+        // tslint:disable-next-line: no-magic-numbers
         if (path.substring(0, 4) === 'http') {
             this.redirect(path);
         } else {
@@ -176,17 +178,17 @@ export class SudooExpressResponseAgent {
             this._res.status(code).send(message);
         } else if (this._raw) {
 
-            this._res.status(200).send(this._raw);
+            this._res.status(HTTP_RESPONSE_CODE.OK).send(this._raw);
         } else if (this._file) {
 
-            this._res.status(200).sendFile(this._file);
+            this._res.status(HTTP_RESPONSE_CODE.OK).sendFile(this._file);
         } else if (this._buffer) {
 
             this._res.contentType(this._buffer.type);
-            this._res.status(200).send(this._buffer);
+            this._res.status(HTTP_RESPONSE_CODE.OK).send(this._buffer);
         } else if (this._binary) {
 
-            this._res.status(200).end(this._binary, 'binary');
+            this._res.status(HTTP_RESPONSE_CODE.OK).end(this._binary, 'binary');
         } else if (this._attachment) {
 
             if (this._attachment.type) {
@@ -206,10 +208,10 @@ export class SudooExpressResponseAgent {
                 parsed[key] = value;
             });
 
-            this._res.status(200).send(parsed);
+            this._res.status(HTTP_RESPONSE_CODE.OK).send(parsed);
         } else {
 
-            this._res.status(204).send();
+            this._res.status(HTTP_RESPONSE_CODE.NO_CONTENT).send();
         }
 
         return this;
