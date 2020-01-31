@@ -25,6 +25,7 @@ export class SudooExpress {
     }
 
     private readonly _express: Express.Express;
+    private readonly _http: Http.Server;
     private readonly _application: SudooExpressApplication;
 
     private readonly _errorCreator: ErrorCreationFunction;
@@ -34,6 +35,7 @@ export class SudooExpress {
     private constructor(app: SudooExpressApplication, error: ErrorCreationFunction) {
 
         this._express = createExpress(app);
+        this._http = Http.createServer(this._express);
         this._application = app;
 
         this._errorCreator = error;
@@ -43,6 +45,9 @@ export class SudooExpress {
 
     public get express(): Express.Express {
         return this._express;
+    }
+    public get http(): Http.Server {
+        return this._http;
     }
     public get application(): SudooExpressApplication {
         return this._application;
@@ -62,8 +67,7 @@ export class SudooExpress {
 
     public host(port: number): this {
 
-        const server: Http.Server = Http.createServer(this._express);
-        server.listen(port);
+        this._http.listen(port);
 
         return this;
     }
