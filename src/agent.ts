@@ -164,6 +164,24 @@ export class SudooExpressResponseAgent {
         return this;
     }
 
+    public declareNoContent(): SudooExpressResponseAgent {
+
+        this._checkFailed();
+        this._expectAllClean();
+
+        this._noContent = true;
+        return this;
+    }
+
+    public declareSucceed(): SudooExpressResponseAgent {
+
+        this._checkFailed();
+        this._expectAllClean();
+
+        this._succeed = true;
+        return this;
+    }
+
     public fail(code: number, error: ConnorError): SudooExpressResponseAgent {
 
         this._failInfo = {
