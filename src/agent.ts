@@ -244,12 +244,31 @@ export class SudooExpressResponseAgent {
 
     private _expectAllClean(): void {
 
-        this._expectClean(this._file, this._binary, this._successInfo.size > 0, this._redirect, this._buffer, this._raw, this._attachment);
+        this._expectClean(
+            this._file,
+            this._binary,
+            this._successInfo.size > 0,
+            this._redirect,
+            this._buffer,
+            this._raw,
+            this._attachment,
+            this._noContent,
+            this._succeed,
+        );
     }
 
     private _expectOtherClean(): void {
 
-        this._expectClean(this._file, this._binary, this._redirect, this._buffer, this._raw, this._attachment);
+        this._expectClean(
+            this._file,
+            this._binary,
+            this._redirect,
+            this._buffer,
+            this._raw,
+            this._attachment,
+            this._noContent,
+            this._succeed,
+        );
     }
 
     private _expectClean(...conditions: any[]): void {

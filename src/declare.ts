@@ -20,7 +20,7 @@ export type SudooExpressResponse = {
 
 export type SudooExpressNextFunction = () => void;
 
-export type SudooExpressHandler = (req: SudooExpressRequest, res: SudooExpressResponse, next: SudooExpressNextFunction) => void;
+export type SudooExpressHandler = (req: SudooExpressRequest, res: SudooExpressResponse, next: SudooExpressNextFunction) => (void | Promise<void>);
 
 export type SudooExpressErrorInfo = {
     readonly code: number;
