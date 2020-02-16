@@ -45,7 +45,7 @@ export class SudooExpressResponseAgent {
     } | null;
 
     private _noContent: boolean;
-    private _succeed: boolean;
+    private _created: boolean;
 
     private constructor(res: Response, route: ISudooExpressRoute, errorCreator: ErrorCreationFunction) {
 
@@ -64,7 +64,7 @@ export class SudooExpressResponseAgent {
         this._failInfo = null;
 
         this._noContent = false;
-        this._succeed = false;
+        this._created = false;
     }
 
     public add(name: string, value: any): SudooExpressResponseAgent {
@@ -173,12 +173,12 @@ export class SudooExpressResponseAgent {
         return this;
     }
 
-    public declareSucceed(): SudooExpressResponseAgent {
+    public declareCreated(): SudooExpressResponseAgent {
 
         this._checkFailed();
         this._expectAllClean();
 
-        this._succeed = true;
+        this._created = true;
         return this;
     }
 
@@ -232,9 +232,15 @@ export class SudooExpressResponseAgent {
             });
 
             this._res.status(HTTP_RESPONSE_CODE.OK).send(parsed);
-        } else {
+        } else if (this._created) {
+
+            this._res.status(HTTP_RESPONSE_CODE.CREATED).send();
+        } else if (this._noContent) {
 
             this._res.status(HTTP_RESPONSE_CODE.NO_CONTENT).send();
+        } else {
+
+            this._res.status(HTTP_RESPONSE_CODE.INTERNAL_SERVER_ERROR).send();
         }
 
         return this;
@@ -271,7 +277,7 @@ export class SudooExpressResponseAgent {
             this._raw,
             this._attachment,
             this._noContent,
-            this._succeed,
+            this._created,
         );
     }
 
@@ -285,7 +291,7 @@ export class SudooExpressResponseAgent {
             this._raw,
             this._attachment,
             this._noContent,
-            this._succeed,
+            this._created,
         );
     }
 
