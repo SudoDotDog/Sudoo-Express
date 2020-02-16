@@ -17,10 +17,10 @@
   },
   "homepage": "https://github.com/SudoDotDog/Sudoo-Express#readme",
   "dependencies": {
-    "@sudoo/bark": "^2.7.1",
-    "@sudoo/magic": "^1.4.1",
+    "@sudoo/bark": "^2.7.2",
+    "@sudoo/magic": "^1.4.5",
     "body-parser": "^1.19.0",
-    "connor": "^2.6.1",
+    "connor": "^2.7.0",
     "cookie-parser": "^1.4.4",
     "express": "^4.17.1"
   },
