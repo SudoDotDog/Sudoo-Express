@@ -44,22 +44,27 @@ export class SudooExpressResponseAgent {
         readonly error: ConnorError;
     } | null;
 
+    private _noContent: boolean;
+    private _succeed: boolean;
+
     private constructor(res: Response, route: ISudooExpressRoute, errorCreator: ErrorCreationFunction) {
 
         this._res = res;
         this._route = route;
 
         this._errorCreator = errorCreator;
+        this._successInfo = new Map<string, any>();
 
         this._raw = null;
         this._file = null;
         this._redirect = null;
         this._binary = null;
-        this._buffer = null;
         this._attachment = null;
-
+        this._buffer = null;
         this._failInfo = null;
-        this._successInfo = new Map<string, any>();
+
+        this._noContent = false;
+        this._succeed = false;
     }
 
     public add(name: string, value: any): SudooExpressResponseAgent {
