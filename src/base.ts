@@ -31,7 +31,7 @@ export class SudooExpress {
     private readonly _errorCreator: ErrorCreationFunction;
 
     private readonly _groups: Map<string, SudooExpressHandler[]>;
-    private readonly _handlers: Map<string, SudooExpressHandler[]>;
+    private readonly _handlers: Set<string>;
 
     private constructor(app: SudooExpressApplication, error: ErrorCreationFunction) {
 
@@ -42,7 +42,7 @@ export class SudooExpress {
         this._errorCreator = error;
 
         this._groups = new Map<string, SudooExpressHandler[]>();
-        this._handlers = new Map<string, SudooExpressHandler[]>();
+        this._handlers = new Set<string>();
     }
 
     public get express(): Express.Express {
@@ -129,6 +129,12 @@ export class SudooExpress {
 
     public route(route: ISudooExpressRoute): this {
 
+        if (this._handlers.has(route.path)) {
+            if (!this._application.allowDuplicateRoute) {
+                throw this._errorCreator(SUDOO_EXPRESS_ERROR_CODE.ROUTE_DUPLICATED, route.path);
+            }
+        }
+
         const handlers: SudooExpressHandler[] = [
 
             createResponseAgentHandler(route),
@@ -143,6 +149,8 @@ export class SudooExpress {
 
             createResponseSendHandler(),
         ]);
+
+        this._handlers.add(route.path);
 
         switch (route.mode) {
 
