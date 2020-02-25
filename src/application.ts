@@ -23,6 +23,8 @@ export class SudooExpressApplication {
     private _crossOrigin: string | null;
     private _crossOriginAllowHeaders: string[];
 
+    private _allowDuplicateRoute: boolean;
+
     private constructor(appName: string, version: string) {
 
         this._appName = appName;
@@ -36,6 +38,8 @@ export class SudooExpressApplication {
 
         this._crossOrigin = null;
         this._crossOriginAllowHeaders = [];
+
+        this._allowDuplicateRoute = false;
     }
 
     public get appName(): string {
@@ -68,6 +72,10 @@ export class SudooExpressApplication {
 
     public get cookieParserSecret(): string | string[] | null {
         return this._cookieParserSecret;
+    }
+
+    public get allowDuplicateRoute(): boolean {
+        return this._allowDuplicateRoute;
     }
 
     public setBodyParserLimit(limit: string): this {
@@ -113,6 +121,18 @@ export class SudooExpressApplication {
     public setCrossOriginAllowHeaders(...headers: string[]): this {
 
         this._crossOriginAllowHeaders = headers;
+        return this;
+    }
+
+    public enableAllowDuplicateRoute(): this {
+
+        this._allowDuplicateRoute = true;
+        return this;
+    }
+
+    public disableAllowDuplicateRoute(): this {
+
+        this._allowDuplicateRoute = false;
         return this;
     }
 }
