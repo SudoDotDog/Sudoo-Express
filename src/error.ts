@@ -6,19 +6,6 @@
 
 import { Connor } from "connor";
 
-export const registerError = (): Connor => {
-
-    return Connor.dictionary('Sudoo-Express', {
-
-        115: 'Response already failed by {}',
-        116: 'Response not clean',
-        152: 'Route mode {} not exist',
-        153: 'Route {} duplicated',
-        218: 'Group: {} already exist',
-        219: 'Group: {} not exist',
-    });
-};
-
 export enum SUDOO_EXPRESS_ERROR_CODE {
 
     RESPONSE_ALREADY_FAILED = 115,
@@ -28,3 +15,16 @@ export enum SUDOO_EXPRESS_ERROR_CODE {
     GROUP_ALREADY_EXIST = 218,
     GROUP_NOT_EXIST = 219,
 }
+
+export const registerError = (): Connor => {
+
+    return Connor.dictionary('Sudoo-Express', {
+
+        [SUDOO_EXPRESS_ERROR_CODE.RESPONSE_ALREADY_FAILED]: 'Response already failed by {}',
+        [SUDOO_EXPRESS_ERROR_CODE.RESPONSE_NOT_CLEAN]: 'Response not clean',
+        [SUDOO_EXPRESS_ERROR_CODE.ROUTE_MODE_NOT_EXIST]: 'Route mode {} not exist',
+        [SUDOO_EXPRESS_ERROR_CODE.ROUTE_DUPLICATED]: 'Route {} duplicated',
+        [SUDOO_EXPRESS_ERROR_CODE.GROUP_ALREADY_EXIST]: 'Group: {} already exist',
+        [SUDOO_EXPRESS_ERROR_CODE.GROUP_NOT_EXIST]: 'Group: {} not exist',
+    } as Record<SUDOO_EXPRESS_ERROR_CODE, string>);
+};
