@@ -31,6 +31,7 @@ export class SudooExpress {
     private readonly _errorCreator: ErrorCreationFunction;
 
     private readonly _groups: Map<string, SudooExpressHandler[]>;
+    private readonly _handlers: Map<string, SudooExpressHandler[]>;
 
     private constructor(app: SudooExpressApplication, error: ErrorCreationFunction) {
 
@@ -41,6 +42,7 @@ export class SudooExpress {
         this._errorCreator = error;
 
         this._groups = new Map<string, SudooExpressHandler[]>();
+        this._handlers = new Map<string, SudooExpressHandler[]>();
     }
 
     public get express(): Express.Express {
@@ -51,6 +53,11 @@ export class SudooExpress {
     }
     public get application(): SudooExpressApplication {
         return this._application;
+    }
+
+    public getRoutes(): string[] {
+
+        return [...this._handlers.keys()];
     }
 
     public group(groupName: string, handlers: SudooExpressHandler[]): this {
