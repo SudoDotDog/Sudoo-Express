@@ -10,7 +10,7 @@ import * as Http from "http";
 import * as ServeStatic from "serve-static";
 import { isString } from "util";
 import { SudooExpressApplication } from "./application";
-import { SudooExpressHandler } from "./declare";
+import { SudooExpressHandler, SudooExpressStaticOptions } from "./declare";
 import { registerError, SUDOO_EXPRESS_ERROR_CODE } from "./error";
 import { createExpress } from "./express";
 import { createHealthCheckDirect, createResponseAgentHandler, createResponseSendHandler } from "./handlers";
@@ -86,7 +86,12 @@ export class SudooExpress {
         return this;
     }
 
-    public static(path: string, options?: ServeStatic.ServeStaticOptions, route?: string): this {
+    public static(path: string, options: SudooExpressStaticOptions): this {
+
+        return this;
+    }
+
+    public expressStatic(path: string, options?: ServeStatic.ServeStaticOptions, route?: string): this {
 
         if (route) {
 

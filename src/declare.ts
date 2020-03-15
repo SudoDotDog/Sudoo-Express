@@ -7,6 +7,11 @@
 import { Request, Response } from "express";
 import { SudooExpressResponseAgent } from "./agent";
 
+export type SudooExpressStaticOptions = {
+
+    readonly exclude: string[];
+};
+
 export type SudooExpressRequest = {
     authenticate: any;
     principal: any;
