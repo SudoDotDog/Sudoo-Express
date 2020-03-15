@@ -4,12 +4,33 @@
  * @description Handlers
  */
 
+import { pathExists } from "@sudoo/io";
 import { HTTP_RESPONSE_CODE } from "@sudoo/magic";
 import { NextFunction, Request, RequestHandler, Response } from "express";
+import * as Path from "path";
 import { SudooExpressResponseAgent } from "./agent";
 import { SudooExpressApplication } from "./application";
-import { SudooExpressHandler, SudooExpressNextFunction, SudooExpressRequest, SudooExpressResponse } from "./declare";
+import { SudooExpressHandler, SudooExpressNextFunction, SudooExpressRequest, SudooExpressResponse, SudooExpressStaticOptions } from "./declare";
 import { ISudooExpressRoute } from "./route";
+
+export const createStaticHandler = (staticPath: string, option: SudooExpressStaticOptions): RequestHandler =>
+    (req: Request, res: Response, next: NextFunction) => {
+
+        const path: string = Path.join(staticPath, req.path);
+        pathExists(path).then((value: boolean) => {
+
+            if (value) {
+                res.sendFile(path);
+                return;
+            }
+
+            next();
+        }).catch((reason: any) => {
+
+            res.status(HTTP_RESPONSE_CODE.BAD_GATEWAY).send(reason);
+            return;
+        });
+    };
 
 export const createHealthCheckDirect = (
     isHealthyFunction: () => boolean,
