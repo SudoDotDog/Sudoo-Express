@@ -86,7 +86,7 @@ export class SudooExpress {
         return this;
     }
 
-    public static(path: string, options: SudooExpressStaticOptions): this {
+    public static(path: string, options: SudooExpressStaticOptions = {}): this {
 
         this._express.use(createStaticHandler(path, options));
         return this;

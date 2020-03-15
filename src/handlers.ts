@@ -13,8 +13,16 @@ import { SudooExpressApplication } from "./application";
 import { SudooExpressHandler, SudooExpressNextFunction, SudooExpressRequest, SudooExpressResponse, SudooExpressStaticOptions } from "./declare";
 import { ISudooExpressRoute } from "./route";
 
-export const createStaticHandler = (staticPath: string, option: SudooExpressStaticOptions): RequestHandler =>
-    (req: Request, res: Response, next: NextFunction) => {
+export const createStaticHandler = (staticPath: string, option: SudooExpressStaticOptions): RequestHandler => {
+
+    const excludes: string[] = option.excludes ?? [];
+    return (req: Request, res: Response, next: NextFunction) => {
+
+        if (excludes.includes(req.path)) {
+
+            next();
+            return;
+        }
 
         const path: string = Path.join(staticPath, req.path);
         pathExists(path).then((value: boolean) => {
@@ -31,6 +39,7 @@ export const createStaticHandler = (staticPath: string, option: SudooExpressStat
             return;
         });
     };
+};
 
 export const createHealthCheckDirect = (
     isHealthyFunction: () => boolean,

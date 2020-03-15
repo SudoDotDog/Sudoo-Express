@@ -9,7 +9,7 @@ import { SudooExpressResponseAgent } from "./agent";
 
 export type SudooExpressStaticOptions = {
 
-    readonly exclude: string[];
+    readonly excludes?: string[];
 };
 
 export type SudooExpressRequest = {
