@@ -12,9 +12,9 @@ export type SudooExpressStaticOptions = {
     readonly excludes?: string[];
 };
 
-export type SudooExpressRequest = {
-    authenticate: any;
-    principal: any;
+export type SudooExpressRequest<InstanceType extends any = any, PrincipalType extends any = any> = {
+    authenticate: InstanceType;
+    principal: PrincipalType;
     valid: boolean;
     readonly info: Record<string, any>;
 } & Request;
