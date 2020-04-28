@@ -4,7 +4,22 @@
  * @description Extension
  */
 
+import { Pattern, Verifier, VerifyResult } from "@sudoo/verify";
 import { SudooExpressHandler, SudooExpressNextFunction, SudooExpressRequest, SudooExpressResponse } from "./declare";
+
+export const createBodyVerifyHandler = (pattern: Pattern): SudooExpressHandler => {
+
+    const verifier: Verifier = Verifier.create(pattern);
+
+    return (req: SudooExpressRequest, _: SudooExpressResponse, next: SudooExpressNextFunction) => {
+
+        const result: VerifyResult = verifier.verify(req.body);
+        req.bodyVerify = result;
+
+        next();
+        return;
+    };
+};
 
 export const createQueryAuthorizationTokenHandler = (key: string): SudooExpressHandler =>
     (req: SudooExpressRequest, _: SudooExpressResponse, next: SudooExpressNextFunction) => {
