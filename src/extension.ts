@@ -19,7 +19,6 @@ export const createQueryAuthorizationTokenHandler = (key: string): SudooExpressH
 
         const decoded: string = decodeURIComponent(authHeader);
 
-        // tslint:disable-next-line: no-magic-numbers
         if (!decoded || decoded.length <= 7) {
             req.principal = null;
             next();
@@ -42,7 +41,6 @@ export const createBodyAuthorizationTokenHandler = (key: string): SudooExpressHa
             return;
         }
 
-        // tslint:disable-next-line: no-magic-numbers
         if (!authHeader || authHeader.length <= 7) {
             req.principal = null;
             next();
@@ -65,7 +63,6 @@ export const createAuthorizationTokenHandler = (protocol: string): SudooExpressH
             return;
         }
 
-        // tslint:disable-next-line: no-magic-numbers
         if (!authHeader || authHeader.length <= 7) {
             req.principal = null;
             next();
