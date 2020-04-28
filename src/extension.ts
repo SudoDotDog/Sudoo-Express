@@ -9,7 +9,7 @@ import { SudooExpressHandler, SudooExpressNextFunction, SudooExpressRequest, Sud
 export const createQueryAuthorizationTokenHandler = (key: string): SudooExpressHandler =>
     (req: SudooExpressRequest, _: SudooExpressResponse, next: SudooExpressNextFunction) => {
 
-        const authHeader: string | undefined = req.query[key];
+        const authHeader: string | undefined = req.query[key] as string | undefined;
 
         if (!authHeader) {
             req.principal = null;
@@ -34,7 +34,7 @@ export const createQueryAuthorizationTokenHandler = (key: string): SudooExpressH
 export const createBodyAuthorizationTokenHandler = (key: string): SudooExpressHandler =>
     (req: SudooExpressRequest, _: SudooExpressResponse, next: SudooExpressNextFunction) => {
 
-        const authHeader: string | undefined = req.body[key];
+        const authHeader: string | undefined = req.body[key] as string | undefined;
 
         if (!authHeader) {
             req.principal = null;
@@ -57,7 +57,7 @@ export const createBodyAuthorizationTokenHandler = (key: string): SudooExpressHa
 export const createAuthorizationTokenHandler = (protocol: string): SudooExpressHandler =>
     (req: SudooExpressRequest, _: SudooExpressResponse, next: SudooExpressNextFunction) => {
 
-        const authHeader: string | undefined = req.header('authorization') || req.header('Authorization');
+        const authHeader: string | undefined = (req.header('authorization') || req.header('Authorization')) as string | undefined;
 
         if (!authHeader) {
             req.principal = null;
