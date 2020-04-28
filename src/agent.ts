@@ -4,7 +4,6 @@
  * @description Agent
  */
 
-import { _Map } from "@sudoo/bark/map";
 import { HTTP_RESPONSE_CODE } from "@sudoo/magic";
 import { Connor, ConnorError, ErrorCreationFunction } from "connor";
 import { Response } from "express";
@@ -76,7 +75,7 @@ export class SudooExpressResponseAgent {
 
     public migrate(map: Record<string, any>): SudooExpressResponseAgent {
 
-        const keys: string[] = _Map.keys(map);
+        const keys: string[] = Object.keys(map);
 
         for (const key of keys) {
             this.add(key, map[key]);
