@@ -19,7 +19,9 @@ export type SudooExpressRequest<InstanceType extends any = any, PrincipalType ex
     principal: PrincipalType;
     valid: boolean;
 
-    bodyVerify: VerifyResult;
+    queryVerify?: VerifyResult;
+    paramsVerify?: VerifyResult;
+    bodyVerify?: VerifyResult;
 
     readonly info: Record<string, any>;
 } & Request;
