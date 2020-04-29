@@ -10,4 +10,5 @@ export * from "./declare";
 export * from "./extension";
 export * from "./hook";
 export * from "./route";
+export * from "./verify";
 
