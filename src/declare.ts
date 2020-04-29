@@ -4,7 +4,7 @@
  * @description Declare
  */
 
-import { VerifyResult } from "@sudoo/verify";
+import { StringedResult, VerifyResult } from "@sudoo/verify";
 import { Request, Response } from "express";
 import { SudooExpressResponseAgent } from "./agent";
 
@@ -22,6 +22,10 @@ export type SudooExpressRequest<InstanceType extends any = any, PrincipalType ex
     queryVerify?: VerifyResult;
     paramsVerify?: VerifyResult;
     bodyVerify?: VerifyResult;
+
+    stringedQueryVerify?: StringedResult;
+    stringedParamsVerify?: StringedResult;
+    stringedBodyVerify?: StringedResult;
 
     readonly info: Record<string, any>;
 } & Request;
