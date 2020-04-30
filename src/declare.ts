@@ -13,6 +13,41 @@ export type SudooExpressStaticOptions = {
     readonly excludes?: string[];
 };
 
+export type SudooExpressExtendRequest = {
+
+    readonly accepted: any[];
+
+    readonly ip: string;
+    readonly ips: string[];
+
+    readonly protocol: string;
+    readonly secure: boolean;
+
+    readonly subdomains: string[];
+    readonly method: string;
+    readonly path: string;
+    readonly hostname: string;
+    readonly host: string;
+    readonly route: string;
+    readonly originalUrl: string;
+    readonly url: string;
+    readonly baseUrl: string;
+
+    readonly fresh: boolean;
+    readonly stale: boolean;
+    readonly xhr: boolean;
+
+    readonly rawHeaders: string;
+    readonly rawTailers: string;
+
+    readonly headers: Record<string, any>;
+    readonly trailers: Record<string, any>;
+    readonly params: Record<string, any>;
+    readonly cookies: Record<string, any>;
+    readonly body: Record<string, any>;
+    readonly query: Record<string, any>;
+} & Request;
+
 export type SudooExpressRequest<InstanceType extends any = any, PrincipalType extends any = any> = {
 
     authenticate: InstanceType;
@@ -28,7 +63,7 @@ export type SudooExpressRequest<InstanceType extends any = any, PrincipalType ex
     stringedBodyVerify?: StringedResult;
 
     readonly info: Record<string, any>;
-} & Request;
+} & SudooExpressExtendRequest;
 
 export type SudooExpressResponse = {
 
