@@ -91,6 +91,34 @@ export const createBodyVerifyHandler = (pattern: Pattern): SudooExpressHandler =
     };
 };
 
+export const createStringedHeadersVerifyHandler = (pattern: Pattern): SudooExpressHandler => {
+
+    const verifier: Verifier = Verifier.create(pattern);
+
+    return (req: SudooExpressRequest, _: SudooExpressResponse, next: SudooExpressNextFunction) => {
+
+        const result: StringedResult = verifier.conclude(req.headers);
+        req.stringedHeadersVerify = result;
+
+        next();
+        return;
+    };
+};
+
+export const createStringedTrailersVerifyHandler = (pattern: Pattern): SudooExpressHandler => {
+
+    const verifier: Verifier = Verifier.create(pattern);
+
+    return (req: SudooExpressRequest, _: SudooExpressResponse, next: SudooExpressNextFunction) => {
+
+        const result: StringedResult = verifier.conclude(req.trailers);
+        req.stringedTrailersVerify = result;
+
+        next();
+        return;
+    };
+};
+
 export const createStringedQueryVerifyHandler = (pattern: Pattern): SudooExpressHandler => {
 
     const verifier: Verifier = Verifier.create(pattern);
@@ -105,7 +133,7 @@ export const createStringedQueryVerifyHandler = (pattern: Pattern): SudooExpress
     };
 };
 
-export const createStringedParamVerifyHandler = (pattern: Pattern): SudooExpressHandler => {
+export const createStringedParamsVerifyHandler = (pattern: Pattern): SudooExpressHandler => {
 
     const verifier: Verifier = Verifier.create(pattern);
 
@@ -113,6 +141,20 @@ export const createStringedParamVerifyHandler = (pattern: Pattern): SudooExpress
 
         const result: StringedResult = verifier.conclude(req.params);
         req.stringedParamsVerify = result;
+
+        next();
+        return;
+    };
+};
+
+export const createStringedCookiesVerifyHandler = (pattern: Pattern): SudooExpressHandler => {
+
+    const verifier: Verifier = Verifier.create(pattern);
+
+    return (req: SudooExpressRequest, _: SudooExpressResponse, next: SudooExpressNextFunction) => {
+
+        const result: StringedResult = verifier.conclude(req.cookies);
+        req.stringedCookiesVerify = result;
 
         next();
         return;
