@@ -54,12 +54,18 @@ export type SudooExpressRequest<AuthenticateType extends any = any, PrincipalTyp
     principal: PrincipalType;
     valid: boolean;
 
+    headersVerify?: VerifyResult;
+    trailersVerify?: VerifyResult;
     queryVerify?: VerifyResult;
     paramsVerify?: VerifyResult;
+    cookiesVerify?: VerifyResult;
     bodyVerify?: VerifyResult;
 
+    stringedHeadersVerify?: StringedResult;
+    stringedTrailersVerify?: StringedResult;
     stringedQueryVerify?: StringedResult;
     stringedParamsVerify?: StringedResult;
+    stringedCookiesVerify?: StringedResult;
     stringedBodyVerify?: StringedResult;
 
     readonly info: Record<string, any>;
