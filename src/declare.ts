@@ -48,9 +48,9 @@ export type SudooExpressExtendRequest = {
     readonly query: Record<string, any>;
 } & Request;
 
-export type SudooExpressRequest<InstanceType extends any = any, PrincipalType extends any = any> = {
+export type SudooExpressRequest<AuthenticateType extends any = any, PrincipalType extends any = any> = {
 
-    authenticate: InstanceType;
+    authenticate: AuthenticateType;
     principal: PrincipalType;
     valid: boolean;
 
