@@ -7,6 +7,34 @@
 import { Pattern, StringedResult, Verifier, VerifyResult } from "@sudoo/verify";
 import { SudooExpressHandler, SudooExpressNextFunction, SudooExpressRequest, SudooExpressResponse } from "./declare";
 
+export const createHeadersVerifyHandler = (pattern: Pattern): SudooExpressHandler => {
+
+    const verifier: Verifier = Verifier.create(pattern);
+
+    return (req: SudooExpressRequest, _: SudooExpressResponse, next: SudooExpressNextFunction) => {
+
+        const result: VerifyResult = verifier.verify(req.headers);
+        req.headersVerify = result;
+
+        next();
+        return;
+    };
+};
+
+export const createTrailersVerifyHandler = (pattern: Pattern): SudooExpressHandler => {
+
+    const verifier: Verifier = Verifier.create(pattern);
+
+    return (req: SudooExpressRequest, _: SudooExpressResponse, next: SudooExpressNextFunction) => {
+
+        const result: VerifyResult = verifier.verify(req.trailers);
+        req.trailersVerify = result;
+
+        next();
+        return;
+    };
+};
+
 export const createQueryVerifyHandler = (pattern: Pattern): SudooExpressHandler => {
 
     const verifier: Verifier = Verifier.create(pattern);
@@ -21,7 +49,7 @@ export const createQueryVerifyHandler = (pattern: Pattern): SudooExpressHandler 
     };
 };
 
-export const createParamVerifyHandler = (pattern: Pattern): SudooExpressHandler => {
+export const createParamsVerifyHandler = (pattern: Pattern): SudooExpressHandler => {
 
     const verifier: Verifier = Verifier.create(pattern);
 
@@ -29,6 +57,20 @@ export const createParamVerifyHandler = (pattern: Pattern): SudooExpressHandler 
 
         const result: VerifyResult = verifier.verify(req.params);
         req.paramsVerify = result;
+
+        next();
+        return;
+    };
+};
+
+export const createCookiesVerifyHandler = (pattern: Pattern): SudooExpressHandler => {
+
+    const verifier: Verifier = Verifier.create(pattern);
+
+    return (req: SudooExpressRequest, _: SudooExpressResponse, next: SudooExpressNextFunction) => {
+
+        const result: VerifyResult = verifier.verify(req.cookies);
+        req.cookiesVerify = result;
 
         next();
         return;
