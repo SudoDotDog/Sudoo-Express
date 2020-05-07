@@ -46,6 +46,14 @@ export type SudooExpressExtendRequest = {
     readonly cookies: Record<string, any>;
     readonly body: Record<string, any>;
     readonly query: Record<string, any>;
+
+    get(name: "set-cookie"): string[] | undefined;
+    get(name: string): string | undefined;
+
+    header(name: "set-cookie"): string[] | undefined;
+    header(name: string): string | undefined;
+
+    param(name: string, defaultValue?: any): string;
 } & Request;
 
 export type SudooExpressRequest<AuthenticateType extends any = any, PrincipalType extends any = any> = {
