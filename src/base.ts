@@ -135,9 +135,10 @@ export class SudooExpress {
 
     public route(route: ISudooExpressRoute): this {
 
-        if (this._handlers.has(route.path)) {
+        const parsedHandlerName: string = this._parseHandlerName(route.path, route.mode);
+        if (this._handlers.has(parsedHandlerName)) {
             if (!this._application.allowDuplicateRoute) {
-                throw this._errorCreator(SUDOO_EXPRESS_ERROR_CODE.ROUTE_DUPLICATED, route.path);
+                throw this._errorCreator(SUDOO_EXPRESS_ERROR_CODE.ROUTE_DUPLICATED, parsedHandlerName);
             }
         }
 
@@ -156,7 +157,7 @@ export class SudooExpress {
             createResponseSendHandler(),
         ]);
 
-        this._handlers.add(route.path);
+        this._handlers.add(parsedHandlerName);
 
         switch (route.mode) {
 
@@ -190,5 +191,10 @@ export class SudooExpress {
         }
 
         throw this._errorCreator(SUDOO_EXPRESS_ERROR_CODE.GROUP_NOT_EXIST, groupName);
+    }
+
+    private _parseHandlerName(path: string, method: ROUTE_MODE): string {
+
+        return `${method}^${path}`;
     }
 }
