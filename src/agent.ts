@@ -7,7 +7,7 @@
 import { HTTP_RESPONSE_CODE } from "@sudoo/magic";
 import { Connor, ConnorError, ErrorCreationFunction } from "connor";
 import { Response } from "express";
-import { SudooExpressErrorHandler, SudooExpressNextFunction } from "./declare";
+import { SudooExpressErrorHandler, SudooExpressErrorInfo, SudooExpressNextFunction } from "./declare";
 import { registerError, SUDOO_EXPRESS_ERROR_CODE } from "./error";
 import { ISudooExpressRoute } from "./route";
 
@@ -195,9 +195,16 @@ export class SudooExpressResponseAgent {
         if (this._failInfo) {
 
             const errorHandler: SudooExpressErrorHandler = this._route.onError.bind(this._route);
+            const errorInfo: SudooExpressErrorInfo = errorHandler(this._failInfo.code, this._failInfo.error);
 
-            const { code, message } = errorHandler(this._failInfo.code, this._failInfo.error);
-            this._res.status(code).send(message);
+            this._res.status(errorInfo.code);
+            if (errorInfo.response) {
+                this._res.send(errorInfo.response);
+            } else if (errorInfo.message) {
+                this._res.send(errorInfo.message);
+            } else {
+                this._res.send(errorInfo.code);
+            }
         } else if (this._raw) {
 
             this._res.status(HTTP_RESPONSE_CODE.OK).send(this._raw);
