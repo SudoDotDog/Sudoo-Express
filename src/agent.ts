@@ -46,6 +46,8 @@ export class SudooExpressResponseAgent {
     private _noContent: boolean;
     private _created: boolean;
 
+    private _extras: Record<string, any>;
+
     private constructor(res: Response, route: ISudooExpressRoute, errorCreator: ErrorCreationFunction) {
 
         this._res = res;
@@ -64,12 +66,26 @@ export class SudooExpressResponseAgent {
 
         this._noContent = false;
         this._created = false;
+
+        this._extras = {};
     }
 
     public add(name: string, value: any): SudooExpressResponseAgent {
 
         this._expectOtherClean();
         this._successInfo.set(name, value);
+        return this;
+    }
+
+    public setExtra(name: string, value: any): this {
+
+        this._extras[name] = value;
+        return this;
+    }
+
+    public replaceExtras(extras: Record<string, any>): this {
+
+        this._extras = extras;
         return this;
     }
 
@@ -93,7 +109,6 @@ export class SudooExpressResponseAgent {
 
     public smart(path: string): SudooExpressResponseAgent {
 
-        // tslint:disable-next-line: no-magic-numbers
         if (path.substring(0, 4) === 'http') {
             this.redirect(path);
         } else {
