@@ -83,9 +83,25 @@ export class SudooExpressResponseAgent {
         return this;
     }
 
+    public getExtra(name: string): any {
+
+        return this._extras[name];
+    }
+
     public replaceExtras(extras: Record<string, any>): this {
 
         this._extras = extras;
+        return this;
+    }
+
+    public getExtras(): Record<string, any> {
+
+        return this._extras;
+    }
+
+    public resetExtras(): this {
+
+        this._extras = {};
         return this;
     }
 
@@ -318,13 +334,15 @@ export class SudooExpressResponseAgent {
 
     private _expectClean(...conditions: any[]): void {
         if (conditions.some(Boolean)) {
-            throw this._errorCreator(SUDOO_EXPRESS_ERROR_CODE.RESPONSE_NOT_CLEAN);
+            const errorCode: SUDOO_EXPRESS_ERROR_CODE = SUDOO_EXPRESS_ERROR_CODE.RESPONSE_NOT_CLEAN;
+            throw this._errorCreator(errorCode);
         }
     }
 
     private _checkFailed(): void {
         if (this._failInfo) {
-            throw this._errorCreator(SUDOO_EXPRESS_ERROR_CODE.RESPONSE_ALREADY_FAILED, this._failInfo.toString());
+            const errorCode: SUDOO_EXPRESS_ERROR_CODE = SUDOO_EXPRESS_ERROR_CODE.RESPONSE_ALREADY_FAILED;
+            throw this._errorCreator(errorCode, this._failInfo.toString());
         }
     }
 }
