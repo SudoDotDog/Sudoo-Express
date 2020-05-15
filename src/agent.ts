@@ -70,7 +70,7 @@ export class SudooExpressResponseAgent {
         this._extras = {};
     }
 
-    public add(name: string, value: any): SudooExpressResponseAgent {
+    public add(name: string, value: any): this {
 
         this._expectOtherClean();
         this._successInfo.set(name, value);
@@ -89,7 +89,7 @@ export class SudooExpressResponseAgent {
         return this;
     }
 
-    public migrate(map: Record<string, any>): SudooExpressResponseAgent {
+    public migrate(map: Record<string, any>): this {
 
         const keys: string[] = Object.keys(map);
 
@@ -99,7 +99,7 @@ export class SudooExpressResponseAgent {
         return this;
     }
 
-    public addIfExist(name: string, value: any | undefined | null): SudooExpressResponseAgent {
+    public addIfExist(name: string, value: any | undefined | null): this {
 
         if (value === undefined || value === null) {
             return this;
@@ -107,7 +107,7 @@ export class SudooExpressResponseAgent {
         return this.add(name, value);
     }
 
-    public smart(path: string): SudooExpressResponseAgent {
+    public smart(path: string): this {
 
         if (path.substring(0, 4) === 'http') {
             this.redirect(path);
@@ -117,7 +117,7 @@ export class SudooExpressResponseAgent {
         return this;
     }
 
-    public redirect(path: string): SudooExpressResponseAgent {
+    public redirect(path: string): this {
 
         this._checkFailed();
         this._expectAllClean();
@@ -126,7 +126,7 @@ export class SudooExpressResponseAgent {
         return this;
     }
 
-    public attachment(content: string, filename: string, type?: string): SudooExpressResponseAgent {
+    public attachment(content: string, filename: string, type?: string): this {
 
         this._checkFailed();
         this._expectAllClean();
@@ -139,7 +139,7 @@ export class SudooExpressResponseAgent {
         return this;
     }
 
-    public buffer(binary: any, type: string): SudooExpressResponseAgent {
+    public buffer(binary: any, type: string): this {
 
         this._checkFailed();
         this._expectAllClean();
@@ -151,7 +151,7 @@ export class SudooExpressResponseAgent {
         return this;
     }
 
-    public binary(binary: any): SudooExpressResponseAgent {
+    public binary(binary: any): this {
 
         this._checkFailed();
         this._expectAllClean();
@@ -160,7 +160,7 @@ export class SudooExpressResponseAgent {
         return this;
     }
 
-    public raw(content: any): SudooExpressResponseAgent {
+    public raw(content: any): this {
 
         this._checkFailed();
         this._expectAllClean();
@@ -169,7 +169,7 @@ export class SudooExpressResponseAgent {
         return this;
     }
 
-    public addFile(path: string): SudooExpressResponseAgent {
+    public addFile(path: string): this {
 
         this._checkFailed();
         this._expectAllClean();
@@ -178,7 +178,7 @@ export class SudooExpressResponseAgent {
         return this;
     }
 
-    public declareNoContent(): SudooExpressResponseAgent {
+    public declareNoContent(): this {
 
         this._checkFailed();
         this._expectAllClean();
@@ -187,7 +187,7 @@ export class SudooExpressResponseAgent {
         return this;
     }
 
-    public declareCreated(): SudooExpressResponseAgent {
+    public declareCreated(): this {
 
         this._checkFailed();
         this._expectAllClean();
@@ -196,7 +196,7 @@ export class SudooExpressResponseAgent {
         return this;
     }
 
-    public fail(code: number, error: ConnorError): SudooExpressResponseAgent {
+    public fail(code: number, error: ConnorError): this {
 
         this._failInfo = {
             code,
@@ -205,7 +205,7 @@ export class SudooExpressResponseAgent {
         return this;
     }
 
-    public send(): SudooExpressResponseAgent {
+    public send(): this {
 
         if (this._failInfo) {
 
