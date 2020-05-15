@@ -91,7 +91,8 @@ export type SudooExpressHandler = (req: SudooExpressRequest, res: SudooExpressRe
 export type SudooExpressErrorInfo = {
 
     readonly code: number;
-    readonly message: string;
+    readonly message?: string;
+    readonly response?: any;
 };
 
 export type SudooExpressErrorHandler = (code: number, error: Error) => SudooExpressErrorInfo;
