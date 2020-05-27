@@ -44,5 +44,10 @@ export const createExpress = (app: SudooExpressApplication): Express.Express => 
         express.use(createAllowCrossOriginHandler(app));
     }
 
+    if (Boolean(app.trustProxy)) {
+
+        express.set('trust proxy', app.trustProxy);
+    }
+
     return express;
 };
