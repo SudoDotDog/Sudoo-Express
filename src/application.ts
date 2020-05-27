@@ -25,6 +25,8 @@ export class SudooExpressApplication {
 
     private _allowDuplicateRoute: boolean;
 
+    private _trustProxy: string | string[] | ((ip: string) => boolean) | boolean;
+
     private constructor(appName: string, version: string) {
 
         this._appName = appName;
@@ -40,6 +42,8 @@ export class SudooExpressApplication {
         this._crossOriginAllowHeaders = [];
 
         this._allowDuplicateRoute = false;
+
+        this._trustProxy = false;
     }
 
     public get appName(): string {
@@ -78,6 +82,10 @@ export class SudooExpressApplication {
         return this._allowDuplicateRoute;
     }
 
+    public get trustProxy(): string | string[] | ((ip: string) => boolean) | boolean {
+        return this._trustProxy;
+    }
+
     public setBodyParserLimit(limit: string): this {
 
         this._bodyParserLimit = limit;
@@ -96,6 +104,15 @@ export class SudooExpressApplication {
 
     public useCookieParser(): this {
         this._cookieParser = true;
+        return this;
+    }
+
+    public useTrustProxy(value?: string | string[] | ((ip: string) => boolean) | boolean): this {
+        if (typeof value === 'undefined') {
+            this._trustProxy = true;
+        } else {
+            this._trustProxy = value;
+        }
         return this;
     }
 
