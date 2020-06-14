@@ -4,7 +4,8 @@
  * @description Verify
  */
 
-import { Pattern, StringedResult, Verifier, VerifyResult } from "@sudoo/verify";
+import { Pattern } from "@sudoo/pattern";
+import { StringedResult, Verifier, VerifyResult } from "@sudoo/verify";
 import { SudooExpressHandler, SudooExpressNextFunction, SudooExpressRequest, SudooExpressResponse } from "./declare";
 
 export const createHeadersVerifyHandler = (pattern: Pattern): SudooExpressHandler => {

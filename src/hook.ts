@@ -36,6 +36,7 @@ export class SudooExpressHook<T extends any[]> {
 
     public wrap(handler: SudooExpressHandler, ...args: T): SudooExpressHandler {
 
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
         const _this: this = this;
 
         return async (req: SudooExpressRequest, res: SudooExpressResponse, next: SudooExpressNextFunction) => {
@@ -55,7 +56,7 @@ export class SudooExpressHook<T extends any[]> {
 
                 const afterHook = _this._afterHook as (req: SudooExpressRequest, res: SudooExpressResponse, ...args: T) => (void | Promise<void>);
 
-                const wrappedNext: () => ((void | Promise<void>)) = async () => {
+                const wrappedNext: () => void | Promise<void> = async () => {
                     await afterHook(req, res, ...args);
                     next();
                 };

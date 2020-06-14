@@ -22,7 +22,7 @@ describe('Given (Handlers) Express handler creator', (): void => {
 
         const headHandler = createHeaderHandler(app);
 
-        // tslint:disable-next-line
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         expect(headHandler).to.be.exist;
     });
 });

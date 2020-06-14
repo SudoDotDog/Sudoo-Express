@@ -55,7 +55,7 @@ export const createBodyAuthorizationTokenHandler = (key: string): SudooExpressHa
 export const createAuthorizationTokenHandler = (protocol: string): SudooExpressHandler =>
     (req: SudooExpressRequest, _: SudooExpressResponse, next: SudooExpressNextFunction) => {
 
-        const authHeader: string | undefined = (req.header('authorization') || req.header('Authorization')) as string | undefined;
+        const authHeader: string | undefined = (req.header('authorization') || req.header('Authorization'));
 
         if (!authHeader) {
             req.principal = null;

@@ -77,7 +77,7 @@ describe('Given {SudooExpressHook} class', (): void => {
 
         const hook: SudooExpressHook<[string]> =
             SudooExpressHook.create<[string]>()
-                .before((req, res, a: string) => (result.push(req.info.a, res.agent as any), true));
+                .before((req, res) => (result.push(req.info.a, res.agent as any), true));
 
         const handler: SudooExpressHandler = hook.wrap(createMockHandler(() => result.push('NEXT')), expectValue);
 
@@ -142,7 +142,7 @@ describe('Given {SudooExpressHook} class', (): void => {
         const hook: SudooExpressHook<[string]> =
             SudooExpressHook.create<[string]>()
                 .before((req, res, a: string) => (result.push(a), true))
-                // tslint:disable-next-line: no-magic-numbers
+                // eslint-disable-next-line @typescript-eslint/no-magic-numbers
                 .after(async (req, res, a: string) => (await promiseSetTimeout(() => result.push(a), 13), undefined));
 
         const mock: MockHandler = MockHandler.create();
@@ -156,7 +156,7 @@ describe('Given {SudooExpressHook} class', (): void => {
         ]);
         expect(mock.called).to.be.deep.equal([]);
 
-        // tslint:disable-next-line: no-magic-numbers
+        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
         await new Promise((resolve) => setTimeout(resolve, 26));
         expect(result).to.be.deep.equal([
             expectValue,

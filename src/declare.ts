@@ -84,7 +84,7 @@ export type SudooExpressResponse = {
     readonly agent: SudooExpressResponseAgent;
 } & Response;
 
-export type SudooExpressNextFunction = () => void;
+export type SudooExpressNextFunction = () => void | Promise<void>;
 
 export type SudooExpressHandler = (req: SudooExpressRequest, res: SudooExpressResponse, next: SudooExpressNextFunction) => (void | Promise<void>);
 
