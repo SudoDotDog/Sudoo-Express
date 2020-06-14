@@ -86,7 +86,7 @@ export type SudooExpressResponse = {
 
 export type SudooExpressNextFunction = () => any | Promise<any>;
 
-export type SudooExpressHandler = (req: SudooExpressRequest, res: SudooExpressResponse, next: SudooExpressNextFunction) => (void | Promise<void>);
+export type SudooExpressHandler = (req: SudooExpressRequest, res: SudooExpressResponse, next: SudooExpressNextFunction) => void | Promise<void>;
 
 export type SudooExpressErrorInfo = {
 
