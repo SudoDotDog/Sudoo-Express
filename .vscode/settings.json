@@ -13,5 +13,7 @@
         "triforce",
         "tshook"
     ],
-    "tslint.configFile": "typescript/tslint.json"
+    "eslint.options": {
+        "configFile": "./typescript/.eslintrc.json"
+    }
 }
