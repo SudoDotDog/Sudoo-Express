@@ -16,3 +16,7 @@ yarn add @sudoo/verify @sudoo/pattern # Peer Dependencies
 npm install @sudoo/express --save
 npm install @sudoo/verify @sudoo/pattern --save # Peer Dependencies
 ```
+
+## Resources
+
+-   [Quick Start](/docs/quick-start.md)
