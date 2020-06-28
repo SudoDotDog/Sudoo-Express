@@ -56,10 +56,10 @@ clean:
 	@echo "[INFO] Cleaning release files"
 	@NODE_ENV=development $(ts_node) script/clean-app.ts
 
-publish: install tests license build
+publish: install tests lint license build
 	@echo "[INFO] Publishing package"
 	@cd app && npm publish --access=public
 
-publish-dry-run: install tests license build
+publish-dry-run: install tests lint license build
 	@echo "[INFO] Publishing package (Dry Run)"
 	@cd app && npm publish --access=public --dry-run

@@ -68,7 +68,7 @@ describe('Given {SudooExpressHook} class', (): void => {
         const result: string[] = [];
         const expectValue: string = chance.string();
         const mock: MockHandler = MockHandler.create().request({
-            info: {
+            infos: {
                 a: expectValue,
             },
         }).response({
@@ -77,7 +77,7 @@ describe('Given {SudooExpressHook} class', (): void => {
 
         const hook: SudooExpressHook<[string]> =
             SudooExpressHook.create<[string]>()
-                .before((req, res) => (result.push(req.info.a, res.agent as any), true));
+                .before((req, res) => (result.push(req.infos.a, res.agent as any), true));
 
         const handler: SudooExpressHandler = hook.wrap(createMockHandler(() => result.push('NEXT')), expectValue);
 
