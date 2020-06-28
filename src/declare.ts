@@ -76,7 +76,8 @@ export type SudooExpressRequest<AuthenticateType extends any = any, PrincipalTyp
     stringedCookiesVerify?: StringedResult;
     stringedBodyVerify?: StringedResult;
 
-    readonly info: Record<string, any>;
+    readonly infos: Record<string, any>;
+    readonly extras: Record<string, any>;
 } & SudooExpressExtendRequest;
 
 export type SudooExpressResponse = {
