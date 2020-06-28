@@ -10,7 +10,7 @@ import { NextFunction, Request, RequestHandler, Response } from "express";
 import * as Path from "path";
 import { SudooExpressResponseAgent } from "./agent";
 import { SudooExpressApplication } from "./application";
-import { SudooExpressHandler, SudooExpressNextFunction, SudooExpressRequest, SudooExpressResponse, SudooExpressStaticOptions } from "./declare";
+import { SudooExpressHandler, SudooExpressNextFunction, SudooExpressRequest, SudooExpressResponse, SudooExpressStaticOptions, Writeable } from "./declare";
 import { ISudooExpressRoute } from "./route";
 
 export const createStaticHandler = (staticPath: string, option: SudooExpressStaticOptions): RequestHandler => {
@@ -90,12 +90,15 @@ export const createHeaderHandler = (app: SudooExpressApplication): RequestHandle
 export const createResponseAgentHandler = (route: ISudooExpressRoute): SudooExpressHandler =>
     (req: SudooExpressRequest, res: SudooExpressResponse, next: SudooExpressNextFunction) => {
 
+        // Request
         req.authenticate = null;
         req.principal = null;
         req.valid = false;
-        (req as any).info = {};
+        (req as Writeable<SudooExpressRequest>).infos = {};
+        (req as Writeable<SudooExpressRequest>).extras = {};
 
-        (res as any).agent = SudooExpressResponseAgent.create(res, route);
+        // Response
+        (res as Writeable<SudooExpressResponse>).agent = SudooExpressResponseAgent.create(res, route);
 
         next();
     };

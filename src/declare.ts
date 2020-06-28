@@ -56,6 +56,8 @@ export type SudooExpressExtendRequest = {
     param(name: string, defaultValue?: any): string;
 } & Request;
 
+export type Writeable<T> = { -readonly [P in keyof T]: T[P] };
+
 export type SudooExpressRequest<AuthenticateType extends any = any, PrincipalType extends any = any> = {
 
     authenticate: AuthenticateType;
