@@ -43,6 +43,7 @@ export class SudooExpressHook<T extends any[]> {
 
             if (_this._beforeHook) {
 
+                // eslint-disable-next-line @typescript-eslint/no-shadow
                 const beforeHook = _this._beforeHook as (req: SudooExpressRequest, res: SudooExpressResponse, ...args: T) => (boolean | Promise<boolean>);
                 const isBeforeSucceed: boolean = await beforeHook(req, res, ...args);
 
@@ -54,6 +55,7 @@ export class SudooExpressHook<T extends any[]> {
 
             if (_this._afterHook) {
 
+                // eslint-disable-next-line @typescript-eslint/no-shadow
                 const afterHook = _this._afterHook as (req: SudooExpressRequest, res: SudooExpressResponse, ...args: T) => (void | Promise<void>);
 
                 const wrappedNext: () => void | Promise<void> = async () => {
