@@ -19,4 +19,4 @@ npm install @sudoo/verify @sudoo/pattern --save # Peer Dependencies
 
 ## Resources
 
--   [Quick Start](/docs/quick-start.md)
+-   [Quick Start](./quick-start.md)
