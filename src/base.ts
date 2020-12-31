@@ -8,7 +8,6 @@ import { Connor, ErrorCreationFunction } from "connor";
 import * as Express from "express";
 import * as Http from "http";
 import * as ServeStatic from "serve-static";
-import { isString } from "util";
 import { SudooExpressApplication } from "./application";
 import { SudooExpressHandler, SudooExpressStaticOptions } from "./declare";
 import { registerError, SUDOO_EXPRESS_ERROR_CODE } from "./error";
@@ -147,7 +146,7 @@ export class SudooExpress {
             createResponseAgentHandler(route),
         ].concat(route.groups.reduce((previous: SudooExpressHandler[], group: SudooExpressHandlerGroup) => {
 
-            if (isString(group)) {
+            if (typeof group === 'string') {
 
                 return previous.concat(...this._assertGroup(group));
             }
