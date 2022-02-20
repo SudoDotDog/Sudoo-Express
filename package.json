@@ -28,7 +28,7 @@
     "body-parser": "^1.19.2",
     "connor": "^2.7.0",
     "cookie-parser": "^1.4.6",
-    "express": "^4.17.2"
+    "express": "^4.17.3"
   },
   "devDependencies": {
     "@sudoo/pattern": "^1.7.0",
