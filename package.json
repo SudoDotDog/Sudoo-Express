@@ -32,7 +32,7 @@
   },
   "devDependencies": {
     "@sudoo/pattern": "^1.10.0",
-    "@sudoo/triforce": "^3.5.1",
+    "@sudoo/triforce": "^3.7.0",
     "@sudoo/verify": "^1.19.0",
     "@types/cookie-parser": "^1.4.3",
     "@types/express": "4.17.9",
