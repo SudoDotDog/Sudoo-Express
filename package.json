@@ -36,7 +36,7 @@
     "@sudoo/verify": "^1.19.0",
     "@types/cookie-parser": "^1.4.6",
     "@types/express": "4.17.9",
-    "ts-node": "^10.9.1"
+    "ts-node": "^10.9.2"
   },
   "nyc": {
     "extension": [
